@@ -9,12 +9,14 @@ Celebrity
 + Rounds
 + Clues
 
+## Done
++ Once all players have submitted clues, players are randomly assigned to x num teams
++ Each player submits X num clues for a game
+
 ## TODO
 + Players sign up 
 + Game starts on with min num of players
-+ Each player submits X num clues for a game
 
-+ Once all players have submitted clues, players are randomly assigned to X num teams
 
 + Players for each team are randomly ordered. Once set, this order is the turn order for each round and will not change.
 + Once players confirm teams, button to start game is enabled
