@@ -1,4 +1,6 @@
 window.onload = function(){
+
+  var teams = [];
   var players = [
     {
     name: 'Neil',
@@ -52,7 +54,7 @@ window.onload = function(){
         'Will Arnett',
         'Chris Pratt',
         'Cobie Smulders',
-        'Shquille O\'Neal'
+        'Shaquille O\'Neal'
       ]
     }, {
     name: 'Neha',
@@ -66,13 +68,11 @@ window.onload = function(){
     }
   ];
 
-  console.log(players)
+  function createLists(data, id){
+    var listItems = data;
+    var listContainer = document.getElementById(id);
 
-  function displayPlayers(data){
-    var players = data
-    var playersContainer = document.getElementById('players');
-
-    players.forEach(function(player){
+    listItems.forEach(function(player){
       var playerContainer = document.createElement('div');
       var playerName = document.createElement('h3');
       var playerClues = document.createElement('ul');
@@ -85,10 +85,10 @@ window.onload = function(){
         var clueLi = document.createElement('li');
         clueLi.textContent = clue;
         playerClues.appendChild(clueLi);
-      })
+      });
 
-      playersContainer.appendChild(playerContainer)
-    })
+      listContainer.appendChild(playerContainer)
+    });
   }
 
   function addStartGameFunctionality() {
@@ -99,49 +99,51 @@ window.onload = function(){
     }
   }
 
-  function assignTeams(num) {
+  function assignTeams(count) {
+    var numTeams = count;
     var playersToAssign = players;
+    var extraPlayers;
 
-    if ( playersToAssign.length % num !== 0 ) {
+    if ( playersToAssign.length % numTeams !== 0 ) {
       // deal with remainders
-      var extraPlayers = playersToAssign.length % num;
-      console.log('extraPlayers', extraPlayers);
+      extraPlayers = playersToAssign.length % numTeams;
     }
 
-    var playersPerTeam = Math.floor(playersToAssign.length / num);
+    var playersPerTeam = Math.floor(playersToAssign.length / numTeams);
 
-    console.log('playersPerTeam', playersPerTeam);
-
-    var teams = [];
-    for ( var j = 0; j < num; j++ ) {
+    // randomly assign a team to each player that isn't part of extraPlayers
+    // remove player from playersToAssign after they join a team
+    for ( var i = 0; i < numTeams; i++ ) {
       var team = [];
-      console.log('-----')
-      console.log(j)
-      for ( var i = 0; i < playersPerTeam; i++ ) {
+      for ( var j = 0; j < playersPerTeam; j++ ) {
         var player = playersToAssign[Math.floor(Math.random() * playersToAssign.length)];
         team.push(player);
-        console.log('player', player.name);
         var toRemove = playersToAssign.indexOf(player);
         playersToAssign.splice(toRemove, 1);
-      };
+      }
       teams.push(team);
     }
 
-    for ( var i = 0; i < extraPlayers; i++ ) {
-      var team = teams[Math.floor(Math.random() * teams.length)];
-      team.push(playersToAssign[i]);
-      playersToAssign.splice(i, 1);
+    // assign extraPlayers to random teams
+    for ( var k = 0; k < extraPlayers; k++ ) {
+      var randomTeam = teams[Math.floor(Math.random() * teams.length)];
+      randomTeam.push(playersToAssign[k]);
+      playersToAssign.splice(k, 1);
     }
 
-    for ( var i = 0; i < teams.length; i++ ) {
-      var team;
-      console.log('---------')
-      teams[i].name = 'team-' + i;
-      console.log(teams[i]);
+    // debugging
+    for ( var l = 0; l < teams.length; l++ ) {
+      console.log('---------');
+      teams[l].name = 'team-' + l;
+      console.log(teams[l]);
     }
   }
 
-  displayPlayers(players);
+  function displayTeams(){
+    var teamsContainer = document.getElementById('teams');
+  }
+
+  createLists(players, 'players');
   addStartGameFunctionality();
   assignTeams(2);
 };
