@@ -14,7 +14,7 @@ Celebrity
 + Each player submits X num clues for a game
 
 ## TODO
-+ Players sign up 
++ `Players` sign up 
 + Game starts on with min num of players
 
 
