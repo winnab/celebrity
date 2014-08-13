@@ -3,6 +3,13 @@ window.onload = function(){
   var teams = [];
   var players
 
+  $.get('./scripts/data.json', function(data){
+    players = data;
+    createLists(players, 'players');
+    addStartGameFunctionality();
+    assignTeams(2);
+  });
+
   function createLists(data, id){
     var listItems = data;
     var listContainer = document.getElementById(id);
@@ -78,7 +85,4 @@ window.onload = function(){
     var teamsContainer = document.getElementById('teams');
   }
 
-  createLists(players, 'players');
-  addStartGameFunctionality();
-  assignTeams(2);
 };
