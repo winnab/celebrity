@@ -5,13 +5,16 @@ window.onload = function(){
 
   $.get('./scripts/data.json', function(data){
     players = data;
-    createLists(players, 'players');
+
+    createPlayerLists(players, 'players');
+    var teams = assignTeams(2);
+    console.log(teams);
+    createTeamsList(players, teams, 'teams');
     addStartGameFunctionality();
-    assignTeams(2);
   });
 
-  function createLists(data, id){
-    var listItems = data;
+  function createPlayerLists(players, id){
+    var listItems = players;
     var listContainer = document.getElementById(id);
 
     listItems.forEach(function(player){
@@ -30,6 +33,29 @@ window.onload = function(){
       });
 
       listContainer.appendChild(playerContainer)
+    });
+  }
+
+  function createTeamsList(players, teams, id){
+    var listItems = teams;
+    var listContainer = document.getElementById(id);
+
+    listItems.forEach(function(team){
+      var teamContainer = document.createElement('div');
+      var teamName = document.createElement('h3');
+      var teamPlayers = document.createElement('ul');
+
+      teamContainer.appendChild(teamName);
+      teamName.textContent = team.name;
+
+      teamContainer.appendChild(teamPlayers);
+      for (var i = 0; i < team.length; i++) {
+        var playerLi = document.createElement('li');
+        playerLi.textContent = team[i].name;
+        teamPlayers.appendChild(playerLi);
+      }
+
+      listContainer.appendChild(teamContainer);
     });
   }
 
@@ -75,14 +101,16 @@ window.onload = function(){
 
     // debugging
     for ( var l = 0; l < teams.length; l++ ) {
-      console.log('---------');
       teams[l].name = 'team-' + l;
-      console.log(teams[l]);
     }
+
+    return teams;
   }
 
-  function displayTeams(){
-    var teamsContainer = document.getElementById('teams');
-  }
+  function displayClue (clues) {
 
+  }
+  // randomizeClue
+  // advanceToNextClue
+  // skipClue
 };
