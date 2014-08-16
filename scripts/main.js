@@ -12,6 +12,7 @@ window.onload = function(){
     createTeamsList(players, teams, 'teams');
     addStartGameFunctionality();
   });
+    var clues = populateClues(globalPlayers);
 
   function createPlayerLists(players, id){
     var listItems = players;
@@ -107,7 +108,12 @@ window.onload = function(){
     return teams;
   }
 
-  function displayClue (clues) {
+    function populateClues(players) {
+      var clues = players.reduce(function(ret, player){
+        return ret.concat(player.clues);
+      }, []);
+      return clues;
+    }
 
   }
   // randomizeClue
