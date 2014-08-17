@@ -1,7 +1,8 @@
 window.onload = function(){
   $.get('./scripts/data.json', function(data){
     var players = data;
-      var globalPlayers = players;
+    var globalPlayers = data;
+    
     var displayPlayersOnPage = createPlayerLists(players, 'players');
 
     console.log(globalPlayers.length);
@@ -52,7 +53,6 @@ window.onload = function(){
           playerLi.textContent = team[i].name;
           teamPlayers.appendChild(playerLi);
         }
-
         listContainer.appendChild(teamContainer);
       });
     }
@@ -65,44 +65,42 @@ window.onload = function(){
     }
 
     function assignTeams(count, players) {
-
-      var numTeams = count;
-      // var players = players;
-      var playersToAssign = players;
-      var teams = [];
-      var extraPlayers;
-
-      if ( playersToAssign.length % numTeams !== 0 ) {
-        // deal with remainders
-        extraPlayers = playersToAssign.length % numTeams;
-      }
-
-      var playersPerTeam = Math.floor(playersToAssign.length / numTeams);
+      var numTeams = count,
+          playersToAssign = players.slice(), //gives copy of players
+          remainder = playersToAssign.length % numTeams,
+          playersPerTeam = Math.floor(playersToAssign.length / numTeams),
+          teams = [];
 
       // randomly assign a team to each player that isn't part of extraPlayers
       // remove player from playersToAssign after they join a team
       for ( var i = 0; i < numTeams; i++ ) {
         var team = [];
         for ( var j = 0; j < playersPerTeam; j++ ) {
-          var player = playersToAssign[Math.floor(Math.random() * playersToAssign.length)];
+          var player = randomElement(playersToAssign);
           team.push(player);
-          var toRemove = playersToAssign.indexOf(player);
-          playersToAssign.slice(toRemove, 1);
+          var assignedPlayerIndex = playersToAssign.indexOf(player);
+          playersToAssign.splice(assignedPlayerIndex, 1);
         }
+
         teams.push(team);
       }
 
       // assign extraPlayers to random teams
-      for ( var k = 0; k < extraPlayers; k++ ) {
-        var randomTeam = teams[Math.floor(Math.random() * teams.length)];
-        randomTeam.push(playersToAssign[k]);
-        playersToAssign.slice(k, 1);
+      if ( remainder !== 0 ) {
+        // deal with remainders
+        for ( var k = 0; k < remainder; k++ ) {
+          var randomTeam = randomElement(teams);
+          randomTeam.push(playersToAssign[k]);
+          // var indexToRemove = playersToAssign.indexOf()
+          playersToAssign.splice(k, 1);
+        }
       }
 
-      // debugging
-      for ( var l = 0; l < teams.length; l++ ) {
-        teams[l].name = 'team-' + l;
-      }
+      // assign names to teams:
+      teams.forEach(function(team, index){
+        team.name = 'team-' + index
+      });
+
       return teams;
     }
 
@@ -119,7 +117,7 @@ window.onload = function(){
       });
     }
 
-    function randomizeClue(data){
+    function randomElement(data){
       var myArray = data;
       var index = Math.floor(Math.random() * myArray.length);
       return myArray[index];
@@ -127,7 +125,7 @@ window.onload = function(){
 
     function displayClue(clues){
       var randomClues = randomize(clues);
-      var randomClue = randomizeClue(randomClues);
+      var randomClue = randomElement(randomClues);
       var clueElement = document.createElement('p');
       var clueContainer = document.getElementById('clue').appendChild(clueElement);
       clueElement.textContent = randomClue;
