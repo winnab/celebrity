@@ -8,8 +8,15 @@ window.onload = function(){
     createTeamsList(globalPlayers, teams, 'teams');
 
     // addStartGameFunctionality();
-
     var currentTeam;
+
+    function round(teams){
+      var roundTeams = teams.slice();
+      var currentTeam = getRandomAndRemove(roundTeams);
+    }
+
+
+
     function pickTurn(){
       currentTeam = randomize(teams);
     }
@@ -26,18 +33,18 @@ window.onload = function(){
       //
     });
 
+    // start game
+    // start turn
+    // randomizeClues
+    // display clue
+    // advanceToNextClue
+    // increment score
+    // skipClue
+    // decrement score
+
   }); // END $.get
 
-  // start game
-  // start turn
-  // randomizeClues
-  // display clue
-  // advanceToNextClue
-  // increment score
-  // skipClue
-  // decrement score
-
-  // DOM dependant functions' defs:
+  ////// DOM dependant functions' defs:
 
   function addStartGameFunctionality() {
     // Game starts on with min num of players
@@ -104,8 +111,7 @@ window.onload = function(){
 }; // END window.onload
 
 
-
-// HELPERS:
+//////HELPERS:
 
 function populateClues(players) {
   var clues = players.reduce(function(ret, player){
@@ -115,7 +121,7 @@ function populateClues(players) {
 }
 
 function setupTeams(numTeams, players) {
-  var playersToAssign = players.slice(), //gives copy of players
+  var playersToAssign = players.slice(), //makes copy of players
       remainder = playersToAssign.length % numTeams,
       playersPerTeam = Math.floor(playersToAssign.length / numTeams),
       teams = [];
@@ -125,10 +131,11 @@ function setupTeams(numTeams, players) {
   for ( var i = 0; i < numTeams; i++ ) {
     var team = [];
     for ( var j = 0; j < playersPerTeam; j++ ) {
-      var player = randomElement(playersToAssign);
+      var player = getRandomAndRemove(playersToAssign);
+      console.log("player", player)
+      console.log("playersToAssign", playersToAssign)
+
       team.push(player);
-      var assignedPlayerIndex = playersToAssign.indexOf(player);
-      playersToAssign.splice(assignedPlayerIndex, 1);
     }
 
     teams.push(team);
@@ -136,7 +143,6 @@ function setupTeams(numTeams, players) {
 
   // assign extraPlayers to random teams
   if ( remainder !== 0 ) {
-    // deal with remainders
     for ( var k = 0; k < remainder; k++ ) {
       var randomTeam = randomElement(teams);
       randomTeam.push(playersToAssign[k]);
@@ -167,5 +173,13 @@ function randomElement(data){
   var myArray = data;
   var index = Math.floor(Math.random() * myArray.length);
   return myArray[index];
+}
+
+function getRandomAndRemove(collection){
+  collection = randomize(collection);
+  var random = randomElement(collection);
+  var indexOfRandom = collection.indexOf(random);
+  collection.splice(indexOfRandom, 1);
+  return random
 }
 
