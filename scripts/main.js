@@ -1,94 +1,221 @@
 window.onload = function(){
+
+  // DOM element variables (those available onload):***********************
+  var setupTeamsButton      = document.getElementById('setupTeams'),
+      startRoundButton      = document.getElementById('startRound'),
+      startTurnButton       = document.getElementById('startTurn'),
+      teamListContainer     = document.getElementById('teams'),
+      playerListContainer   = document.getElementById('players'),
+      teamOrderContainer    = document.getElementById('order'),
+      gotItButton           = document.getElementById('gotIt'),
+      skipItButton          = document.getElementById('skipIt'),
+      clueElement           = document.getElementById('clue'),
+      counterContainer      = document.getElementById('counter'),
+      counterElement        = document.createElement('time'),
+      scoreContainer        = document.getElementById('scoreContainer'),
+      scoreElement          = document.getElementById('score'),
+      currentTeamContainer  = document.getElementById("currentTeam"),
+      currentTeamMemberElement = document.getElementById("currentTeamMember");
+
+  // ASYNC:**************************************************************
   $.get('./scripts/data.json', function(data){
-    var globalPlayers = data;
-    var teams = setupTeams(2, globalPlayers);
-    var clues = populateClues(globalPlayers);
 
-    createPlayerLists(globalPlayers, 'players');
-    createTeamsList(globalPlayers, teams, 'teams');
+    var globalPlayers = data,
+        teams         = randomize(setupTeams(2, globalPlayers)),
+        clues         = populateClues(globalPlayers),
+        roundClues    = randomize(clues).slice(),
+        roundTeams,
+        currentTeam,
+        currentTeamCopy,
+        currentTeamMember,
+        currentClue,
+        currentIntervalId,
+        countdown;
 
-    // addStartGameFunctionality();
-    var currentTeam;
+    createPlayerLists(globalPlayers);
 
-    function round(teams){
-      var roundTeams = teams.slice();
-      var currentTeam = getRandomAndRemove(roundTeams);
+    // EVENT listeners:**************************************************
+    setupTeamsButton.onclick = function(){ 
+      createTeamsList(globalPlayers, teams);
+      displayTeamOrder(teams);
+      setCurrentTeam(teams);
+      displayCurrentTeam(currentTeam);
+      setCurrentTeamMember();
+      displayTeamMember(currentTeamMember, "Next");
+      displayInitialCounter();
+      displayScore();
+      showIt(startTurnButton);
+      hideIt(this);
+      // TODO need to remove this listener for the rest of the game (this.removeEventListener('click', <handler>) )
+    }
+
+    startTurnButton.onclick = function(){
+      hideIt(this);
+      if (currentTeam.indexOf(currentTeamMember) == 0){
+        currentClue = getRandomAndRemove(roundClues);
+        clueContainer.appendChild(clueElement);
+        displayClue(currentClue);
+      } else {
+        resetCounterElement();
+        nextClue();
+      }
+      displayTeamMember(currentTeamMember, "Current");
+      showControlButtons();
+      setTimer();
+  
+      // TODO need to remove this listener for the rest of the round and reattach it for each round... (this.removeEventListener('click', <handler>) )
+    }
+
+
+    gotItButton.onclick = function(){
+      nextClue(roundClues);
+      currentTeam.score++;
+      updateScore();
+      console.log("score", currentTeam.score);
+    }
+
+    skipItButton.onclick = function(){
+      console.log("skip");
+      nextClue(roundClues);
     }
 
 
 
-    function pickTurn(){
-      currentTeam = randomize(teams);
+    // Qs:*********************************************************
+    // do we need to display all clues in the beginning? team player names should be sufficient
+
+    // NEXT todos:*************************************************
+    
+    // TODO: add change current team
+    // line 45, 62
+    // switch to jQuery, this is killing me :p
+  
+
+
+
+    // DATA dependant function defs:*******************************
+
+    function setCurrentTeam(teams){
+      roundTeams = teams.slice();
+      currentTeam = roundTeams[0];
+      currentTeamCopy = currentTeam.slice();
+      console.log(currentTeamCopy);
+      return currentTeam;
     }
 
-    $("#startTurn").on("click", function(){
-      var playedClues = [];
-      // console.log("clicked startTurn");
-      //show clue:
-      var currentClue = displayClue(clues);
-      // set up an tem unavaialbele array to keep track
-      playedClues.push(currentClue);
-      //start timer:
-      // ...
-      //
+    function setCurrentTeamMember(){
+      currentTeamMember = currentTeamCopy.splice(0, 1)[0].name;
+    }
+
+    function displayInitialCounter(){
+      var counterText = document.createElement('h4');
+      counterText.textContent = "Counter: "
+      counterContainer.appendChild(counterText);
+      counterElement.textContent = "00:00"
+      counterContainer.appendChild(counterElement);
+    }
+
+    function displayScore(){
+      var scoreText = document.createElement('h4');
+      scoreText.textContent = "Score: "
+      scoreContainer.insertBefore(scoreText, scoreElement);
+      scoreElement.textContent = currentTeam.score;
+    }
+
+    function updateCounter(){
+      countdown++;
+      if (countdown > 59){
+
+        clearInterval(currentIntervalId);
+        setCurrentTeamMember();
+        displayTeamMember(currentTeamMember, "Next");
+        showIt(startTurnButton);
+        hideControlButtons();
+        resetClue();
+    
+      } else {
+        counterElement.textContent = "00:" + humanizeCountdown(countdown);
+      }
+    }
+
+    function updateScore(){
+      scoreElement.textContent = currentTeam.score;
+    }
+
+    function setTimer(){
+      countdown = 0;
+      currentIntervalId = setInterval(updateCounter, 1000);
+    }
+  
+    function nextClue(){
+      currentClue = getRandomAndRemove(roundClues);
+      displayClue(currentClue);
+    }    
+    
+  }); // END of ASYNC __________________________________________________
+
+
+
+
+  //DOM dependant functions' defs:**************************************
+
+  function displayTeamOrder(teams){
+    var orderListContainer = document.createElement("ol");
+    var listHeading = document.createElement("h3");
+    listHeading.textContent = "Order of teams"
+    teams.forEach(function(team){
+      var teamContainer = document.createElement("li");
+      teamContainer.textContent = team.name;
+      orderListContainer.appendChild(teamContainer);
     });
-
-    // start game
-    // start turn
-    // randomizeClues
-    // display clue
-    // advanceToNextClue
-    // increment score
-    // skipClue
-    // decrement score
-
-  }); // END $.get
-
-  ////// DOM dependant functions' defs:
-
-  function addStartGameFunctionality() {
-    // Game starts on with min num of players
-    var start = document.getElementById('start');
-    start.onclick = function(e){
-      alert('let\'s get started oh yea!');
-    }
+    teamOrderContainer.appendChild(listHeading);
+    teamOrderContainer.appendChild(orderListContainer);
   }
 
-  function displayClue(clues){
-    var randomClues = randomize(clues);
-    var randomClue = randomElement(randomClues);
-    var clueElement = document.createElement('p');
-    var clueContainer = document.getElementById('clue').appendChild(clueElement);
-    clueElement.textContent = randomClue;
-    return randomClue;
+  function displayCurrentTeam(team){
+    var element = document.createElement("h3");
+    currentTeamContainer.appendChild(element);
+    element.textContent = "Current team: " + team.name;
   }
 
-  function createPlayerLists(players, id){
+  function displayTeamMember(member, status){
+    currentTeamMemberElement.textContent = status + " player: " + member;
+  }
+
+  function displayClue(clue){
+    console.log("displaying clue")
+    console.log("clue ", clue)
+    clueElement.textContent = "Your clue: " + clue;
+  }
+
+  function resetClue(){
+    clueElement.textContent = "Your clue: ---";
+  }
+
+  function createPlayerLists(players){
     var listItems = players;
-    var listContainer = document.getElementById(id);
-
+  
     listItems.forEach(function(player){
       var playerContainer = document.createElement('div');
       var playerName = document.createElement('h3');
-      var playerClues = document.createElement('ul');
+      // var playerClues = document.createElement('ul');
 
       playerContainer.appendChild(playerName);
       playerName.textContent = player.name;
 
-      playerContainer.appendChild(playerClues);
-      player.clues.forEach(function(clue){
-        var clueLi = document.createElement('li');
-        clueLi.textContent = clue;
-        playerClues.appendChild(clueLi);
-      });
+      // playerContainer.appendChild(playerClues);
+      // player.clues.forEach(function(clue){
+      //   var clueLi = document.createElement('li');
+      //   clueLi.textContent = clue;
+      //   playerClues.appendChild(clueLi);
+      // });
 
-      listContainer.appendChild(playerContainer)
+      playerListContainer.appendChild(playerContainer)
     });
   }
 
-  function createTeamsList(players, teams, id){
+  function createTeamsList(players, teams){
     var listItems = teams;
-    var listContainer = document.getElementById(id);
 
     listItems.forEach(function(team){
       var teamContainer = document.createElement('div');
@@ -104,14 +231,28 @@ window.onload = function(){
         playerLi.textContent = team[i].name;
         teamPlayers.appendChild(playerLi);
       }
-      listContainer.appendChild(teamContainer);
+      teamListContainer.appendChild(teamContainer);
     });
+  }
+
+  function resetCounterElement(){
+    counterElement.textContent = "00:00"
+  }
+
+  function showControlButtons(){
+    showIt(gotItButton);
+    showIt(skipItButton);
+  }
+
+  function hideControlButtons(){
+    hideIt(gotItButton);
+    hideIt(skipItButton);
   }
 
 }; // END window.onload
 
 
-//////HELPERS:
+//HELPERS:*********************************************************
 
 function populateClues(players) {
   var clues = players.reduce(function(ret, player){
@@ -132,9 +273,6 @@ function setupTeams(numTeams, players) {
     var team = [];
     for ( var j = 0; j < playersPerTeam; j++ ) {
       var player = getRandomAndRemove(playersToAssign);
-      console.log("player", player)
-      console.log("playersToAssign", playersToAssign)
-
       team.push(player);
     }
 
@@ -152,14 +290,15 @@ function setupTeams(numTeams, players) {
   }
 
   // assign names to teams:
-  assignNames(teams);
+  assignNamesAndScore(teams);
 
   return teams;
 }
 
-function assignNames(teams){
+function assignNamesAndScore(teams){
   teams.forEach(function(team, index){
-    team.name = 'team-' + index
+    team.name = 'team-' + (index+1);
+    team.score = 0;
   });
 }
 
@@ -182,4 +321,36 @@ function getRandomAndRemove(collection){
   collection.splice(indexOfRandom, 1);
   return random
 }
+
+function humanizeCountdown(countdown){
+  var countdownString;
+  if ( countdown < 10 ) {
+    countdownString = "0" + countdown;
+  } else {
+    countdownString = countdown.toString();
+  }
+  return countdownString;
+}
+
+
+
+function showIt(element){
+  element.style.display = "inline-block";
+}
+
+function hideIt(element){
+  element.style.display = "none";
+}
+
+// does a good job shuffling but using randomize(), as that's simpler
+// function shuffleTeams(teams){
+//   var tempArray = teams.slice(),
+//       shuffledTeams = [],
+//       length = tempArray.length;
+//   for (var i = 0; i < length; i++) {
+//     var t = getRandomAndRemove(tempArray);
+//     shuffledTeams.push(t);
+//   }
+//   return shuffledTeams;
+// }
 

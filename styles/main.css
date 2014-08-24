@@ -5,3 +5,22 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0; }
+
+ol {
+  padding: 20px; }
+
+#startTurn,
+#gotIt,
+#skipIt {
+  display: none; }
+
+time,
+#score {
+  font-size: 30px;
+  font-weight: bold }
+
+#round {
+  text-align: center; }
+
+#round section{ 
+  margin-bottom: 40px;}

@@ -19,29 +19,65 @@
   <header>
     <h1>Celebrity!</h1>
   </header>
-  <button id="start">Start Game!</button>
 
   <div class="row">
     <div class="col-xs-6">
-      <div id="players">
+      
+      <section id="players" class="col-xs-6">
         <h2>Players</h2>
-      </div>
-      <div id="teams">
-        <h2>Teams</h2>
-      </div>
+      </section>
+
+      <section class="col-xs-6">
+        <section id="teams">
+          <h2>Teams</h2>
+          <button id="setupTeams">setup teams</button>
+        </section>
+
+        <section id="order">
+        </section>
+      </section>
     </div>
-    <div id="clues" class="col-xs-6">
-      <div class="turn-control">
 
-        <button id="startTurn">Start turn!</button>
-        <div id="clue">
+    <section class="col-xs-6" id="round">
+      <section class="col-xs-6">
+          <section id="currentTeam">
+          </section>
 
-        </div>
-        <button class="advance">Got it!</button>
-        <button class="skip">Skip it!</button>
+          <section>
+            <h3 id="currentTeamMember"></h3>
+          </section>
 
-      </div>
-    </div>
-  </div>
+          <section class="turn-control">
+
+            <section>
+              <h3 id="clue"></h3>
+            </section>
+
+            
+
+            <button id="startTurn">Start turn!</button>
+
+
+            <button id="gotIt">Got it!</button>
+            <button id="skipIt">Skip it!</button>
+          </section>
+
+          
+          
+      </section>
+      
+
+      <section class="col-xs-6">
+        <section id="counter">
+        </section>
+
+        <section id="scoreContainer">
+          <p id="score"></p>
+        </section>
+      </section>
+    </section>
+
+  </div> <!-- END .row -->
+
 </body>
 </html>

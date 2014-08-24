@@ -16,6 +16,8 @@ Celebrity
 ## TODO
 + `Players` sign up 
 + Game starts on with min num of players
++ user input for number of teams?
+
 
 
 + Players for each team are randomly ordered. Once set, this order is the turn order for each round and will not change.
