@@ -35,7 +35,7 @@ window.onload = function(){
     createPlayerLists(globalPlayers);
 
     // EVENT listeners:**************************************************
-    setupTeamsButton.onclick = function(){ 
+    setupTeamsButton.onclick = function(){
       createTeamsList(globalPlayers, teams);
       displayTeamOrder(teams);
       setCurrentTeam(teams);
@@ -62,10 +62,9 @@ window.onload = function(){
       displayTeamMember(currentTeamMember, "Current");
       showControlButtons();
       setTimer();
-  
+
       // TODO need to remove this listener for the rest of the round and reattach it for each round... (this.removeEventListener('click', <handler>) )
     }
-
 
     gotItButton.onclick = function(){
       nextClue(roundClues);
@@ -79,19 +78,16 @@ window.onload = function(){
       nextClue(roundClues);
     }
 
-
-
     // Qs:*********************************************************
-    // do we need to display all clues in the beginning? team player names should be sufficient
+
+    // do we need to display all clues in the beginning? team player names should be sufficient, removed the clues from teh view for now
 
     // NEXT todos:*************************************************
-    
+
     // TODO: add change current team
     // line 45, 62
+    // TESTS!!!!
     // switch to jQuery, this is killing me :p
-  
-
-
 
     // DATA dependant function defs:*******************************
 
@@ -132,7 +128,7 @@ window.onload = function(){
         showIt(startTurnButton);
         hideControlButtons();
         resetClue();
-    
+
       } else {
         counterElement.textContent = "00:" + humanizeCountdown(countdown);
       }
@@ -146,16 +142,13 @@ window.onload = function(){
       countdown = 0;
       currentIntervalId = setInterval(updateCounter, 1000);
     }
-  
+
     function nextClue(){
       currentClue = getRandomAndRemove(roundClues);
       displayClue(currentClue);
-    }    
-    
+    }
+
   }); // END of ASYNC __________________________________________________
-
-
-
 
   //DOM dependant functions' defs:**************************************
 
@@ -194,7 +187,7 @@ window.onload = function(){
 
   function createPlayerLists(players){
     var listItems = players;
-  
+
     listItems.forEach(function(player){
       var playerContainer = document.createElement('div');
       var playerName = document.createElement('h3');
@@ -251,8 +244,7 @@ window.onload = function(){
 
 }; // END window.onload
 
-
-//HELPERS:*********************************************************
+//HELPERS:****************************************************************
 
 function populateClues(players) {
   var clues = players.reduce(function(ret, player){
@@ -331,8 +323,6 @@ function humanizeCountdown(countdown){
   }
   return countdownString;
 }
-
-
 
 function showIt(element){
   element.style.display = "inline-block";
