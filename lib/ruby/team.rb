@@ -3,7 +3,7 @@ class Team
 
   def initialize name
     @name = name
-    raise Exception if !@name
+    raise Exception("Your team needs a name, people.") if @name == ""
   end
 
 end
