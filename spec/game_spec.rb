@@ -1,6 +1,16 @@
 require "game"
 require "pry"
 describe Game do
+  describe Game::Invite do
+    let(:invite) { Game::Invite.new() }
+    context "valid invite" do
+      it "has a creator" do
+        expect(invite).to respond_to(:created_by)
+      end
+    end
+
+  end
+
   describe Game::Play do
     let(:playersObj) {
       ["winna", "neil", "chucky", "jessica", "richa", "deb", "divya", "gautam"].map do | p |

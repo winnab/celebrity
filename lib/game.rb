@@ -1,5 +1,5 @@
 module Game
-  class Setup
+  class Invite
   end
 
   class Play
