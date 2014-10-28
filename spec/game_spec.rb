@@ -10,8 +10,7 @@ describe Game do
     let(:num_teams) { 2 }
     let(:game) { Game::Play.new(playersObj, num_teams) }
 
-     # check that game.new checks that the player obj is passed in with name and clues
-    context "having six or more players" do
+    context "valid game" do
       it "should create teams" do
         expect(game).to respond_to(:teams)
       end
@@ -21,7 +20,7 @@ describe Game do
         expect(max_size - min_size).to be <= 1
       end
 
-      it "can be started" do
+      it "can start" do
         expect(game.can_start?).to be true
       end
     end
@@ -41,7 +40,7 @@ describe Game do
           end
          }
 
-        it "cannot be started", focus:true do
+        it "cannot start" do
           expect(game.can_start?).to be false
         end
       end
