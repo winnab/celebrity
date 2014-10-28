@@ -21,7 +21,11 @@ module Game
     end
 
     def can_start?
-      has_players? && has_clues? && sufficient_players? && sufficient_clues?
+      has_teams? && has_players? && has_clues? && sufficient_players? && sufficient_clues?
+    end
+
+    def has_teams?
+      @teams.all? { | t | t.size > 2 }
     end
 
     def has_players?
