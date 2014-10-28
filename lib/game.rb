@@ -1,5 +1,10 @@
 module Game
   class Invite
+    attr_accessor :sender
+
+    def initialize sender
+      @sender = sender
+    end
   end
 
   class Play
