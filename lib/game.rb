@@ -5,6 +5,11 @@ module Game
     def initialize sender
       @sender = sender
     end
+
+    def has_sender?
+      !(@sender[:name].empty? && @sender[:email].empty?)
+    end
+    end
   end
 
   class Play

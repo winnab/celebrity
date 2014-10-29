@@ -2,11 +2,11 @@ require "game"
 require "pry"
 describe Game do
   describe Game::Invite do
-    let(:sender) { Hash[ "email", "test@example.com" ] }
+    let(:sender) { Hash[ "email", "test@example.com", "name", "Sophie" ] }
     let(:invite) { Game::Invite.new(sender) }
     context "valid invite" do
-      it "has a sender email address" do
-        expect(invite.sender).to have_key("email")
+      it "has a sender with a name and email address" do
+        expect(invite.has_sender?).to be true
       end
     end
 
