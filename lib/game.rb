@@ -39,7 +39,7 @@ module Celebrity
       players.shuffle!
       players_per_team = (players.length / num_teams).floor
       players.each_slice(players_per_team) { | p | teams << p }
-      teams
+      teams.each { | t | Team.new(t) }
     end
 
     def can_start?
@@ -74,9 +74,9 @@ module Celebrity
   class Team
     attr_accessor :score, :players
 
-    def initialize players, score = 0
+    def initialize players
       @players = players
-      @score = score
+      @score = 0
     end
 
   end

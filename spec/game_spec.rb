@@ -40,7 +40,7 @@ describe Celebrity do
       let(:team) { Celebrity::Team.new(playersObj) }
 
       it "should create teams" do
-        expect(game).to respond_to(:teams)
+        expect(game.teams[0]).to be_a(Celebrity::Team)
       end
 
       it "should give teams a default score of 0" do
