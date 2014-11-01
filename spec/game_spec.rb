@@ -1,15 +1,15 @@
 require "game"
 require "pry"
-describe Game do
+describe Celebrity do
   let(:players) { ["winna", "neil", "chucky", "jessica", "richa", "deb", "divya", "gautam"] }
-  describe Game::Invite do
+  describe Celebrity::Invite do
     let(:recipients) {
       players.map do | p |
         { name: p, email: "#{p}.my_email@example.com"  }
       end
      }
     let(:sender) { { email: "test@example.com", name: "Sophie" } }
-    let(:invite) { Game::Invite.new(sender, recipients) }
+    let(:invite) { Celebrity::Invite.new(sender, recipients) }
     context "valid invite" do
       it "has a sender with a name and email address" do
         expect(invite.has_sender?).to be true
@@ -19,17 +19,22 @@ describe Game do
         expect(invite.has_valid_recipients?).to be true
       end
 
+      it "sends invites"
+      it "detects when an invitee has responded"
+      it "detects when game is valid and can start"
+
+
     end
   end
 
-  describe Game::Play do
+  describe Celebrity::Play do
     let(:playersObj) {
       players.map do | p |
         { name: p, clues: 5.times.each_with_object([]) { | i, obj | obj << "clue-#{i}"}  }
       end
      }
     let(:num_teams) { 2 }
-    let(:game) { Game::Play.new(playersObj, num_teams) }
+    let(:game) { Celebrity::Play.new(playersObj, num_teams) }
 
     context "valid game" do
       it "should create teams" do
@@ -48,7 +53,7 @@ describe Game do
 
     context "invalid game" do
       context "having fewer than 6 players" do
-        let(:game) { Game::Play.new(playersObj[0, 4], num_teams) }
+        let(:game) { Celebrity::Play.new(playersObj[0, 4], num_teams) }
 
         it "cannot be started" do
           expect(game.can_start?).to be false

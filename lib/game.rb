@@ -1,4 +1,4 @@
-module Game
+module Celebrity
   class Invite
     attr_accessor :sender, :recipients
 
