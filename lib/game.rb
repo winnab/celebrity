@@ -71,6 +71,13 @@ module Celebrity
   class Players
   end
 
-  class Teams
+  class Team
+    attr_accessor :score, :players
+
+    def initialize players, score = 0
+      @players = players
+      @score = score
+    end
+
   end
 end

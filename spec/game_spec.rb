@@ -37,8 +37,14 @@ describe Celebrity do
     let(:game) { Celebrity::Game.new(playersObj, num_teams) }
 
     context "valid game" do
+      let(:team) { Celebrity::Team.new(playersObj) }
+
       it "should create teams" do
         expect(game).to respond_to(:teams)
+      end
+
+      it "should give teams a default score of 0" do
+        expect(team.score).to eql 0
       end
 
       it "should assign players to teams evenly" do
