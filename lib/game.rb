@@ -18,6 +18,10 @@ module Game
     def has_recipient_names?
       @recipients.all? { | r | r[:name] }
     end
+
+    def has_valid_recipients?
+      has_recipient_emails? && has_recipient_names?
+    end
   end
 
   class Play

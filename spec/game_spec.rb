@@ -1,31 +1,30 @@
 require "game"
 require "pry"
 describe Game do
+  let(:players) { ["winna", "neil", "chucky", "jessica", "richa", "deb", "divya", "gautam"] }
   describe Game::Invite do
-    let(:sender) { { email: "test@example.com", name: "Sophie" } }
     let(:recipients) {
-      ["winna", "neil", "chucky", "jessica", "richa", "deb", "divya", "gautam"].map do | p |
+      players.map do | p |
         { name: p, email: "#{p}.my_email@example.com"  }
       end
      }
+    let(:sender) { { email: "test@example.com", name: "Sophie" } }
     let(:invite) { Game::Invite.new(sender, recipients) }
     context "valid invite" do
       it "has a sender with a name and email address" do
         expect(invite.has_sender?).to be true
       end
 
-      it "has recipients" do
-        expect(invite.has_recipient_emails?).to be true
+      it "has valid recipients" do
+        expect(invite.has_valid_recipients?).to be true
       end
 
-
     end
-
   end
 
   describe Game::Play do
     let(:playersObj) {
-      ["winna", "neil", "chucky", "jessica", "richa", "deb", "divya", "gautam"].map do | p |
+      players.map do | p |
         { name: p, clues: 5.times.each_with_object([]) { | i, obj | obj << "clue-#{i}"}  }
       end
      }
@@ -57,7 +56,7 @@ describe Game do
       end
       context "having an insufficient number of clues" do
         let(:playersObj) {
-          ["winna", "neil", "chucky", "jessica", "richa", "deb", "divya", "gautam"].map do | p |
+          players.map do | p |
             { name: p, clues: 3.times.each_with_object([]) { | i, obj | obj << "clue-#{i}"}  }
           end
          }
