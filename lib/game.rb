@@ -24,7 +24,7 @@ module Celebrity
     end
   end
 
-  class Play
+  class Game
     attr_accessor :players, :num_teams, :teams
     MIN_NUM_PLAYERS = 6
 

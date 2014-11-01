@@ -27,14 +27,14 @@ describe Celebrity do
     end
   end
 
-  describe Celebrity::Play do
+  describe Celebrity::Game do
     let(:playersObj) {
       players.map do | p |
         { name: p, clues: 5.times.each_with_object([]) { | i, obj | obj << "clue-#{i}"}  }
       end
      }
     let(:num_teams) { 2 }
-    let(:game) { Celebrity::Play.new(playersObj, num_teams) }
+    let(:game) { Celebrity::Game.new(playersObj, num_teams) }
 
     context "valid game" do
       it "should create teams" do
@@ -49,11 +49,13 @@ describe Celebrity do
       it "can start" do
         expect(game.can_start?).to be true
       end
+
+      it "displays a clue to a player"
     end
 
     context "invalid game" do
       context "having fewer than 6 players" do
-        let(:game) { Celebrity::Play.new(playersObj[0, 4], num_teams) }
+        let(:game) { Celebrity::Game.new(playersObj[0, 4], num_teams) }
 
         it "cannot be started" do
           expect(game.can_start?).to be false
