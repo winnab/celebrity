@@ -25,7 +25,7 @@ module Celebrity
   end
 
   class Game
-    attr_accessor :players, :num_teams, :teams
+    attr_accessor :players, :num_teams, :teams, :clues
     attr_reader :current_player
 
     MIN_NUM_PLAYERS = 6
@@ -34,6 +34,7 @@ module Celebrity
       @num_teams = num_teams
       @players = create_players players
       @teams = create_teams num_teams
+      @clues = collect_clues
     end
 
     def create_players players
@@ -41,6 +42,10 @@ module Celebrity
       players.each { | p | @players << Player.new(p[:name], p[:clues]) }
       @players.shuffle!
       @players
+    end
+
+    def collect_clues
+      @players.flat_map { | p | p.clues }
     end
 
     def create_teams num_teams
@@ -87,10 +92,11 @@ module Celebrity
   end
 
   class Play
-    attr_accessor :game, :current_player
+    attr_accessor :game, :current_player, :current_round
     def initialize game
       @game = game
       @current_player = @game.players[0]
+      @current_round = 1
     end
   end
 

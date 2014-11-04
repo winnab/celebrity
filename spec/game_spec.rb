@@ -52,6 +52,10 @@ describe Celebrity do
         expect(max_size - min_size).to be <= 1
       end
 
+      it "should create a collection of clues" do
+        expect(game.clues).to be_an(Array)
+      end
+
       it "can start" do
         expect(game.can_start?).to be true
       end
@@ -59,7 +63,6 @@ describe Celebrity do
       context "active game" do
         let(:play) { Celebrity::Play.new(game) }
         it "should set the current player as the first player on the first team" do
-          binding.pry
           expect(play.current_player).to be_a(Celebrity::Player)
         end
 
