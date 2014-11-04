@@ -26,20 +26,32 @@ module Celebrity
 
   class Game
     attr_accessor :players, :num_teams, :teams
+    attr_reader :current_player
+
     MIN_NUM_PLAYERS = 6
 
     def initialize players, num_teams = 2
-      @players = players
       @num_teams = num_teams
+      @players = players
       @teams = create_teams players, num_teams
     end
 
     def create_teams players, num_teams
-      teams = []
       players.shuffle!
       players_per_team = (players.length / num_teams).floor
-      players.each_slice(players_per_team) { | p | teams << p }
-      teams.each { | t | Team.new(t) }
+      players_by_team = []
+      teams = []
+      players.each_slice(players_per_team) do | group |
+        players = []
+        group.each do | p |
+          players << Player.new(p[:name], p[:clues])
+        end
+        players_by_team << players
+      end
+      num_teams.times do | i |
+        teams << Team.new(players_by_team[i])
+      end
+      teams
     end
 
     def can_start?
@@ -66,18 +78,25 @@ module Celebrity
       total = @players.reduce(0) { | ret, p | ret += p[:clues].length }
       total >= ( @players.length * 4 )
     end
+
+    def current_player
+      return @players[0]
+    end
   end
 
-  class Players
+  class Player
+    attr_accessor :name, :clues
+    def initialize name, clues = []
+      @name = name
+      @clues = clues
+    end
   end
 
   class Team
     attr_accessor :score, :players
-
     def initialize players
       @players = players
       @score = 0
     end
-
   end
 end
