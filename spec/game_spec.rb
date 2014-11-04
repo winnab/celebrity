@@ -56,22 +56,29 @@ describe Celebrity do
         expect(game.can_start?).to be true
       end
 
-      it "can set the current player as the first player on the first team" do
-        expect(game.current_player).to be_a(Celebrity::Player)
-      end
+      context "active game" do
+        let(:play) { Celebrity::Play.new(game) }
+        it "should set the current player as the first player on the first team" do
+          binding.pry
+          expect(play.current_player).to be_a(Celebrity::Player)
+        end
 
-      it "can tell me the next player"
-      it "can tell me the round number"
-      it "can tell me how many clues have been guessed this round"
-      it "can tell me how many clues remain this round"
-      it "can increment or decrement a team's score"
-      it "displays a clue to a player"
+        it "should start the first round by giving a turn the current player" do
+          expect(play.current_round).to eql 1
+        end
+
+        it "gives a clue to the current player"
+        it "knows the next player"
+        it "knows the round number"
+        it "knows how many clues have been guessed this round"
+        it "knows how many clues remain this round"
+        it "increment or decrement a team's score"
     end
+  end
 
     context "invalid game" do
       context "having fewer than 6 players" do
         let(:game) { Celebrity::Game.new(playersObj[0, 4], num_teams) }
-
         it "cannot be started" do
           expect(game.can_start?).to be false
         end

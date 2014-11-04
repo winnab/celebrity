@@ -86,6 +86,14 @@ module Celebrity
     end
   end
 
+  class Play
+    attr_accessor :game, :current_player
+    def initialize game
+      @game = game
+      @current_player = @game.players[0]
+    end
+  end
+
   class Player
     attr_accessor :name, :clues
     def initialize name, clues = []
