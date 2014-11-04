@@ -1,5 +1,6 @@
 require "game"
 require "pry"
+
 describe Celebrity do
   let(:players) { ["winna", "neil", "chucky", "jessica", "richa", "deb", "divya", "gautam"] }
   describe Celebrity::Invite do
@@ -46,7 +47,8 @@ describe Celebrity do
       end
 
       it "should assign players to teams evenly" do
-        min_size, max_size = game.teams.map(&:length).minmax
+        team_sizes = game.teams.collect { | t | t.players.length }
+        min_size, max_size = team_sizes.minmax
         expect(max_size - min_size).to be <= 1
       end
 
@@ -54,8 +56,7 @@ describe Celebrity do
         expect(game.can_start?).to be true
       end
 
-      it "can tell me the current player" do
-        binding.pry
+      it "can set the current player as the first player on the first team" do
         expect(game.current_player).to be_a(Celebrity::Player)
       end
 
