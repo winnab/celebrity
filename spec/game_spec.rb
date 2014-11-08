@@ -72,11 +72,24 @@ describe Celebrity do
         end
 
         context "active turn" do
-          let(:turn) { round.new_turn }
+          let(:start_turn) { round.new_turn }
+          let(:after_guessed_clue_correctly) { round.new_turn.guessed_clue }
+          let(:after_skipped_clue) { round.new_turn.skipped_clue }
 
           it "lasts 60 seconds" do
-            expect(turn.remaining_time).to eql(60)
+            expect(start_turn.remaining_time).to eql(60)
           end
+
+          it "increases in score each time a clue is guessed" do
+            expect(after_guessed_clue_correctly.get_score - start_turn.get_score).to eql(1)
+          end
+
+          it "decreases in score each time a clue is skipped" do
+            expect(start_turn.get_score - after_skipped_clue.get_score).to eql(-1)
+          end
+
+
+
         end
 
         it "gives a clue to the current player"

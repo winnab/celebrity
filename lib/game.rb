@@ -34,6 +34,7 @@ module Celebrity
       @players = create_players players
       @teams = create_teams num_teams
       @clues = collect_clues
+      @current_round = start_round
     end
 
     def create_players players
@@ -128,7 +129,62 @@ module Celebrity
       @completed_clues = []
       @remaining_time = 60
       @score = 0
+      @current_clue = nil
     end
+
+    def show_new_clue
+      @current_clue = @remaining_clues[0]
+    end
+
+    def guessed_clue
+      update_as_guessed_correctly
+    end
+
+    def skipped_clue
+      update_as_skipped
+    end
+
+    def get_score
+      @score
+    end
+
+    private
+
+    def update_as_guessed_correctly
+      add_clue_to_completed
+      remove_clue_from_remaining
+      show_new_clue
+      increment_score
+    end
+
+    def update_as_skipped
+      move_clue_to_end_of_remaining
+      show_new_clue
+      decrement_score
+    end
+
+    def add_clue_to_completed
+      @completed_clues.push(@current_clue)
+    end
+
+    def remove_clue_from_remaining
+      @remaining_clues.slice!(0)
+    end
+
+    def move_clue_to_end_of_remaining
+      @remaining_clues.rotate(1)
+    end
+
+    def increment_score
+      @score += 1
+      return self
+    end
+
+    def decrement_score
+      @score += 1
+      return self
+    end
+
 
 
   end
