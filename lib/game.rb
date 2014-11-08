@@ -110,6 +110,27 @@ module Celebrity
       @completed_clues = []
       @type = ROUND_TYPES[0]
     end
+
+    def new_turn
+      Turn.new(@remaining_clues)
+    end
+
+    def update_score
+    end
+
+  end
+
+  class Turn
+    attr_accessor :remaining_time, :remaining_clues, :completed_clues, :score
+
+    def initialize clues
+      @remaining_clues = clues
+      @completed_clues = []
+      @remaining_time = 60
+      @score = 0
+    end
+
+
   end
 
   class Player

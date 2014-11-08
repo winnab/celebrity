@@ -65,7 +65,19 @@ describe Celebrity do
       end
 
       context "active round" do
-        let(:round) { Celebrity::Round.new() }
+        let(:round) { game.current_round }
+
+        it "gives current player a turn" do
+          expect(round.new_turn).to be_a(Celebrity::Turn)
+        end
+
+        context "active turn" do
+          let(:turn) { round.new_turn }
+
+          it "lasts 60 seconds" do
+            expect(turn.remaining_time).to eql(60)
+          end
+        end
 
         it "gives a clue to the current player"
         it "knows the next player"
