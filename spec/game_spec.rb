@@ -56,27 +56,16 @@ describe Celebrity do
         expect(game.clues).to be_an(Array)
       end
 
-      it "can start" do
-        expect(game.can_start?).to be true
+      it "sets the current player as the first player on the first team" do
+        expect(game.current_player).to be_a(Celebrity::Player)
       end
 
-      context "active game" do
-        let(:play) { Celebrity::Play.new(game) }
-        it "should set the current player as the first player on the first team" do
-          expect(play.current_player).to be_a(Celebrity::Player)
-        end
+      it "starts with a round that allows players to use as many words as they want" do
+        expect(game.current_round.type).to eql('UNLIMITED_WORDS')
+      end
 
-        it "should start the first round by giving a turn the current player" do
-          expect(play.current_round).to eql 1
-        end
-
-        it "should have all clues as remaining clues at the start of the first round" do
-          expect(play.remaining_clues).to eql(game.clues)
-        end
-
-        it "should have zero completed clues at the start of the first round" do
-          expect(play.completed_clues).to eql([])
-        end
+      context "active round" do
+        let(:round) { Celebrity::Round.new() }
 
         it "gives a clue to the current player"
         it "knows the next player"

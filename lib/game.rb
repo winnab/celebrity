@@ -25,8 +25,7 @@ module Celebrity
   end
 
   class Game
-    attr_accessor :players, :num_teams, :teams, :clues
-    attr_reader :current_player
+    attr_accessor :players, :num_teams, :teams, :clues, :current_player, :current_round
 
     MIN_NUM_PLAYERS = 6
 
@@ -89,16 +88,27 @@ module Celebrity
     def current_player
       @players[0]
     end
+
+    def start_round
+      Round.new(@current_player, @teams, @clues)
+    end
   end
 
-  class Play
-    attr_accessor :game, :current_player, :current_round, :remaining_clues, :completed_clues
-    def initialize game
-      @game = game
-      @current_player = @game.players[0]
-      @current_round = 1
-      @remaining_clues = @game.clues
+  class Round
+    attr_accessor :remaining_clues, :completed_clues, :type
+
+    ROUND_TYPES = [
+      'UNLIMITED_WORDS',
+      'ONE_WORD',
+      'CHARADES'
+    ]
+
+    def initialize current_player, teams, clues
+      @current_player = current_player
+      @teams = teams
+      @remaining_clues = clues
       @completed_clues = []
+      @type = ROUND_TYPES[0]
     end
   end
 
