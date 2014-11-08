@@ -38,21 +38,21 @@ describe Celebrity do
     context "valid game" do
       let(:team) { game.teams[0] }
 
-      it "should create teams" do
+      it "has teams" do
         expect(team).to be_a(Celebrity::Team)
       end
 
-      it "should give teams a default score of 0" do
+      it "gives teams default scores of 0" do
         expect(team.score).to eql 0
       end
 
-      it "should assign players to teams evenly" do
+      it "evenly assigns players to teams" do
         team_sizes = game.teams.collect { | t | t.players.length }
         min_size, max_size = team_sizes.minmax
         expect(max_size - min_size).to be <= 1
       end
 
-      it "should create a collection of clues" do
+      it "creates a collection of clues" do
         expect(game.clues).to be_an(Array)
       end
 
