@@ -70,6 +70,14 @@ describe Celebrity do
           expect(play.current_round).to eql 1
         end
 
+        it "should have all clues as remaining clues at the start of the first round" do
+          expect(play.remaining_clues).to eql(game.clues)
+        end
+
+        it "should have zero completed clues at the start of the first round" do
+          expect(play.completed_clues).to eql([])
+        end
+
         it "gives a clue to the current player"
         it "knows the next player"
         it "knows the round number"

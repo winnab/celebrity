@@ -92,11 +92,13 @@ module Celebrity
   end
 
   class Play
-    attr_accessor :game, :current_player, :current_round
+    attr_accessor :game, :current_player, :current_round, :remaining_clues, :completed_clues
     def initialize game
       @game = game
       @current_player = @game.players[0]
       @current_round = 1
+      @remaining_clues = @game.clues
+      @completed_clues = []
     end
   end
 
