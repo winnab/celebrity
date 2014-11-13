@@ -29,7 +29,7 @@ describe Celebrity do
   describe Celebrity::Game do
     let(:playersObj) {
       players.map do | p |
-        { name: p, clues: 5.times.each_with_object([]) { | i, obj | obj << "clue-#{i}"}  }
+        { name: p, clues: 5.times.each_with_object([]) { | i, obj | obj << "#{p}-clue-#{i}"}  }
       end
      }
     let(:num_teams) { 2 }
@@ -53,7 +53,7 @@ describe Celebrity do
       end
 
       it "creates a collection of clues" do
-        expect(game.clues).to be_an(Array)
+        expect(game.clues).to include("winna-clue-1")
       end
 
       it "sets the current player as the first player on the first team" do
@@ -72,21 +72,31 @@ describe Celebrity do
         end
 
         context "active turn" do
-          let(:start_turn) { round.new_turn }
-          let(:after_guessed_clue_correctly) { round.new_turn.guessed_clue }
-          let(:after_skipped_clue) { round.new_turn.skipped_clue }
+          let(:turn) { round.new_turn }
 
           it "lasts 60 seconds" do
-            expect(start_turn.remaining_time).to eql(60)
+            expect(turn.remaining_time).to eql(60)
           end
 
-          it "increases in score each time a clue is guessed" do
-            expect(after_guessed_clue_correctly.get_score - start_turn.get_score).to eql(1)
+          describe "#guessed_clue" do
+            it "increases in score" do
+              expect { turn.guessed_clue }.to change { turn.score }.by(1)
+            end
+
+            it "changes the clue" do
+              expect { turn.guessed_clue }.to change { turn.current_clue }
+            end
+
+            it "moves current_clue from remaining to complete clues" do
+              turn.guessed_clue
+              expect(turn.remaining_clues).to_not include turn.current_clue
+              expect(turn.completed_clues).to include turn.current_clue
+            end
           end
 
-          it "decreases in score each time a clue is skipped" do
-            expect(start_turn.get_score - after_skipped_clue.get_score).to eql(-1)
-          end
+            # it "decreases in score each time a clue is skipped" do
+            # end
+
         end
 
         describe "#next_player" do

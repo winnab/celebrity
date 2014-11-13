@@ -116,7 +116,7 @@ module Celebrity
     end
 
     def start_round
-      Round.new(@current_player_ix, @teams, @clues, @game)
+      Round.new(@current_player_ix, @teams, @clues.dup, @game)
     end
   end
 
@@ -152,7 +152,7 @@ module Celebrity
   end
 
   class Turn
-    attr_accessor :remaining_time, :remaining_clues, :completed_clues, :score
+    attr_accessor :remaining_time, :remaining_clues, :completed_clues, :score, :current_clue
 
     def initialize clues, player
       @player = player
@@ -160,11 +160,7 @@ module Celebrity
       @completed_clues = []
       @remaining_time = 60
       @score = 0
-      @current_clue = nil
-    end
-
-    def show_new_clue
-      @current_clue = @remaining_clues[0]
+      set_next_clue
     end
 
     def guessed_clue
@@ -182,28 +178,13 @@ module Celebrity
     private
 
     def update_as_guessed_correctly
-      add_clue_to_completed
-      remove_clue_from_remaining
-      show_new_clue
+      set_next_clue
       increment_score
     end
 
     def update_as_skipped
-      move_clue_to_end_of_remaining
-      show_new_clue
+      # send_clue_to_back
       decrement_score
-    end
-
-    def add_clue_to_completed
-      @completed_clues.push(@current_clue)
-    end
-
-    def remove_clue_from_remaining
-      @remaining_clues.slice!(0)
-    end
-
-    def move_clue_to_end_of_remaining
-      @remaining_clues.rotate(1)
     end
 
     def increment_score
@@ -216,13 +197,14 @@ module Celebrity
       return self
     end
 
-
-
+    def set_next_clue
+      @completed_clues << @current_clue = @remaining_clues.shift
+    end
   end
 
   class Player
     attr_accessor :name, :clues, :team
-    def initialize name, clues = [], team
+    def initialize name, clues = [], team = nil
       @name = name
       @clues = clues
       @team = team
