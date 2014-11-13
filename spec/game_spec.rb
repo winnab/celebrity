@@ -87,13 +87,13 @@ describe Celebrity do
           it "decreases in score each time a clue is skipped" do
             expect(start_turn.get_score - after_skipped_clue.get_score).to eql(-1)
           end
-
-
-
         end
 
-        it "gives a clue to the current player"
-        it "knows the next player"
+        it "knows the next player" do
+          game.set_player_lineup
+          expect(game.next_player).to be(game.lineup[1])
+        end
+
         it "knows the round number"
         it "knows how many clues have been guessed this round"
         it "knows how many clues remain this round"

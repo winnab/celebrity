@@ -25,7 +25,7 @@ module Celebrity
   end
 
   class Game
-    attr_accessor :players, :num_teams, :teams, :clues, :current_player, :current_round
+    attr_accessor :players, :num_teams, :teams, :clues, :current_player_ix, :current_team, :current_round, :lineup
 
     MIN_NUM_PLAYERS = 6
 
@@ -34,6 +34,8 @@ module Celebrity
       @players = create_players players
       @teams = create_teams num_teams
       @clues = collect_clues
+      @current_player_ix = 0
+      @current_team = nil
       @current_round = start_round
     end
 
@@ -56,7 +58,8 @@ module Celebrity
       end
       @teams = []
       num_teams.times do | i |
-        teams << Team.new(players_by_team[i])
+        players_by_team[i].each { | p | p.team = i }
+        teams << Team.new(i, players_by_team[i])
       end
       teams
     end
@@ -87,11 +90,33 @@ module Celebrity
     end
 
     def current_player
-      @players[0]
+      set_player_lineup if @lineup.nil?
+      @lineup[@current_player_ix]
+    end
+
+    def next_player
+      @lineup[current_player_ix + 1];
+    end
+
+    def set_player_lineup
+      @lineup = [];
+      longest = @teams.map { | t | t.players.length }.max
+      longest.times do | n |
+        @teams.each do | t |
+          @lineup << t.players[n] if t.players[n]
+        end
+      end
+    end
+
+    def current_team
+    end
+
+    def get_next_player
+
     end
 
     def start_round
-      Round.new(@current_player, @teams, @clues)
+      Round.new(@current_player_ix, @teams, @clues, @game)
     end
   end
 
@@ -104,16 +129,21 @@ module Celebrity
       'CHARADES'
     ]
 
-    def initialize current_player, teams, clues
-      @current_player = current_player
+    def initialize current_player_ix, teams, clues, game
+      @current_player_ix = current_player_ix
       @teams = teams
       @remaining_clues = clues
       @completed_clues = []
       @type = ROUND_TYPES[0]
+      @game = game
     end
 
     def new_turn
-      Turn.new(@remaining_clues)
+      Turn.new(@remaining_clues, @current_player_ix)
+    end
+
+    def next_player
+      @game.get_next_player
     end
 
     def update_score
@@ -124,7 +154,8 @@ module Celebrity
   class Turn
     attr_accessor :remaining_time, :remaining_clues, :completed_clues, :score
 
-    def initialize clues
+    def initialize clues, player
+      @player = player
       @remaining_clues = clues
       @completed_clues = []
       @remaining_time = 60
@@ -190,18 +221,22 @@ module Celebrity
   end
 
   class Player
-    attr_accessor :name, :clues
-    def initialize name, clues = []
+    attr_accessor :name, :clues, :team
+    def initialize name, clues = [], team
       @name = name
       @clues = clues
+      @team = team
     end
   end
 
   class Team
-    attr_accessor :score, :players
-    def initialize players
+    attr_accessor :name, :score, :players, :player_ix
+    def initialize name, players
+      @name = name
       @players = players
       @score = 0
+      @player_ix = 0
     end
+
   end
 end
