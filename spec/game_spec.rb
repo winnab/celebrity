@@ -80,7 +80,7 @@ describe Celebrity do
 
           describe "#guessed_clue" do
             it "increases in score" do
-              expect { turn.guessed_clue }.to change { turn.score }.by(1)
+              expect { turn.guessed_clue }.to change { turn.score }.from(0).to(1)
             end
 
             it "changes the clue" do
@@ -94,8 +94,23 @@ describe Celebrity do
             end
           end
 
-            # it "decreases in score each time a clue is skipped" do
-            # end
+          describe "#skipped_clue" do
+            it "decreases the score" do
+              expect { turn.skipped_clue }.to change { turn.score }.from(0).to(-1)
+            end
+
+            it "changes the clue" do
+              expect { turn.skipped_clue }.to change { turn.current_clue }
+            end
+
+            it "moves current_clue from remaining to complete clues" do
+              clue_being_skipped = turn.current_clue
+
+              turn.skipped_clue
+              expect(turn.remaining_clues.last).to eq(clue_being_skipped)
+              expect(turn.completed_clues).to_not include clue_being_skipped
+            end
+          end
 
         end
 

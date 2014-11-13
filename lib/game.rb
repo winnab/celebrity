@@ -160,7 +160,7 @@ module Celebrity
       @completed_clues = []
       @remaining_time = 60
       @score = 0
-      set_next_clue
+      @current_clue = @remaining_clues.shift
     end
 
     def guessed_clue
@@ -183,22 +183,25 @@ module Celebrity
     end
 
     def update_as_skipped
-      # send_clue_to_back
+      send_clue_to_back
       decrement_score
     end
 
     def increment_score
       @score += 1
-      return self
     end
 
     def decrement_score
-      @score += 1
-      return self
+      @score -= 1
     end
 
     def set_next_clue
       @completed_clues << @current_clue = @remaining_clues.shift
+    end
+
+    def send_clue_to_back
+      @remaining_clues << @current_clue
+      @current_clue = @remaining_clues.shift
     end
   end
 
