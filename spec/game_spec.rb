@@ -89,9 +89,18 @@ describe Celebrity do
           end
         end
 
-        it "knows the next player" do
-          game.set_player_lineup
-          expect(game.next_player).to be(game.lineup[1])
+        describe "#next_player" do
+          before(:each) { game.set_player_lineup }
+
+          it "picks the next player in the lineup" do
+            expect(game.next_player).to_not be(game.current_player)
+            expect(game.next_player).to be(game.lineup[1])
+          end
+
+          it "loops back to the start of the lineup when needed" do
+            game.current_player_ix = game.lineup.length - 1
+            expect(game.next_player).to be(game.lineup[0])
+          end
         end
 
         it "knows the round number"

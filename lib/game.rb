@@ -95,7 +95,7 @@ module Celebrity
     end
 
     def next_player
-      @lineup[current_player_ix + 1];
+      @lineup[@current_player_ix + 1] || @lineup[0];
     end
 
     def set_player_lineup
