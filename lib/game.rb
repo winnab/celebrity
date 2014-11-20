@@ -152,13 +152,13 @@ module Celebrity
   end
 
   class Turn
-    attr_accessor :remaining_time, :remaining_clues, :completed_clues, :score, :current_clue
+    attr_accessor :timer, :remaining_clues, :completed_clues, :score, :current_clue
 
     def initialize clues, player
       @player = player
       @remaining_clues = clues
       @completed_clues = []
-      @remaining_time = 60
+      @timer = Timer.new
       @score = 0
       @current_clue = @remaining_clues.shift
     end
@@ -202,6 +202,10 @@ module Celebrity
     def send_clue_to_back
       @remaining_clues << @current_clue
       @current_clue = @remaining_clues.shift
+    end
+
+    class Timer
+
     end
   end
 

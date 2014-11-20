@@ -20,9 +20,9 @@ describe Celebrity do
         expect(invite.has_valid_recipients?).to be true
       end
 
-      it "sends invites"
-      it "detects when an invitee has responded"
-      it "detects when game is valid and can start"
+      # it "sends invites"
+      # it "detects when an invitee has responded"
+      # it "detects when game is valid and can start"
     end
   end
 
@@ -74,8 +74,10 @@ describe Celebrity do
         context "active turn" do
           let(:turn) { round.new_turn }
 
-          it "lasts 60 seconds" do
-            expect(turn.remaining_time).to eql(60)
+          describe "#initialize" do
+            it "creates a timer" do
+              expect(turn.timer).to be_a(Celebrity::Turn::Timer)
+            end
           end
 
           describe "#guessed_clue" do
@@ -103,7 +105,7 @@ describe Celebrity do
               expect { turn.skipped_clue }.to change { turn.current_clue }
             end
 
-            it "moves current_clue from remaining to complete clues" do
+            it "moves current_clue to the end of remaining_clues" do
               clue_being_skipped = turn.current_clue
 
               turn.skipped_clue
@@ -128,10 +130,10 @@ describe Celebrity do
           end
         end
 
-        it "knows the round number"
-        it "knows how many clues have been guessed this round"
-        it "knows how many clues remain this round"
-        it "increment or decrement a team's score"
+        # it "knows the round number"
+        # it "knows how many clues have been guessed this round"
+        # it "knows how many clues remain this round"
+        # it "increment or decrement a team's score"
     end
   end
 
