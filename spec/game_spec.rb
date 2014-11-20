@@ -79,6 +79,10 @@ describe Celebrity do
               expect(turn.timer.started?).to be true
               expect(turn.timer.finished?).to be false
             end
+
+            it "is subscribed to the timer" do
+              expect(turn.timer.count_observers).to be(1)
+            end
           end
 
           describe "#guessed_clue" do
@@ -112,6 +116,16 @@ describe Celebrity do
               turn.skipped_clue
               expect(turn.remaining_clues.last).to eq(clue_being_skipped)
               expect(turn.completed_clues).to_not include clue_being_skipped
+            end
+          end
+
+          describe "#update" do
+            it "receives an update when time is finished" do
+              short_fuse = Celebrity::Turn::Timer.new(3)
+              allow(Celebrity::Turn::Timer).to receive(:new).and_return(short_fuse)
+              expect(turn).to receive(:update)
+              turn.timer.thread.join
+              expect(turn.timer.finished?).to be true
             end
           end
 

@@ -1,3 +1,5 @@
+require 'observer'
+
 module Celebrity
   class Invite
     attr_accessor :sender, :recipients
@@ -162,7 +164,9 @@ module Celebrity
       @score = 0
       @current_clue = @remaining_clues.shift
 
+      @timer.add_observer self
       @timer.run
+
     end
 
     def guessed_clue
@@ -175,6 +179,10 @@ module Celebrity
 
     def get_score
       @score
+    end
+
+    def update
+      # end of Turn
     end
 
     private
@@ -207,13 +215,26 @@ module Celebrity
     end
 
     class Timer
-      def initialize
+      include Observable
+      attr_accessor :thread
+
+      def initialize time = 60
         @started = false
         @finished = false
+        @time = time
       end
 
       def run
         @started = true
+        @thread = Thread.new do
+          while @time > 0 do
+            @time -= 1
+            sleep(1)
+          end
+          changed
+          notify_observers
+          @finished = true
+        end
       end
 
       def started?
