@@ -75,8 +75,9 @@ describe Celebrity do
           let(:turn) { round.new_turn }
 
           describe "#initialize" do
-            it "creates a timer" do
-              expect(turn.timer).to be_a(Celebrity::Turn::Timer)
+            it "creates a timer that is running" do
+              expect(turn.timer.started?).to be true
+              expect(turn.timer.finished?).to be false
             end
           end
 

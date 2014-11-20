@@ -161,6 +161,8 @@ module Celebrity
       @timer = Timer.new
       @score = 0
       @current_clue = @remaining_clues.shift
+
+      @timer.run
     end
 
     def guessed_clue
@@ -205,7 +207,22 @@ module Celebrity
     end
 
     class Timer
+      def initialize
+        @started = false
+        @finished = false
+      end
 
+      def run
+        @started = true
+      end
+
+      def started?
+        @started
+      end
+
+      def finished?
+        @finished
+      end
     end
   end
 
