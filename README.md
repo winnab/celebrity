@@ -1,36 +1,37 @@
-Celebrity
-=========
-## Components
-+ Teams
-+ Players
-+ Game
-+ Timer
-+ Score
-+ Rounds
-+ Clues
+# Celebrity
 
-## Done
-+ Once all players have submitted clues, players are randomly assigned to x num teams
-+ Each player submits X num clues for a game
+## Basic Setup
 
-## TODO
-+ `Players` sign up 
-+ Game starts on with min num of players
-+ user input for number of teams?
+#### 1. Invite players
+You'll need a minimum of six players to start a game.
 
+#### 2. Each player submits a certain number of "celebrity" clues
+Celebrities can be anyone or anything that is considered "famous," which generally means that at least three players in the game know the celebrity.  
 
+#### 3. After all clues are submitted, assign players to teams
+Teams are assigned after clues are submitted so that clues can't be tailored to teammates. Player order is set at the start of the game.
 
-+ Players for each team are randomly ordered. Once set, this order is the turn order for each round and will not change.
-+ Once players confirm teams, button to start game is enabled
-+ Game prompts each user at start of her/his turn
-+ Player clicks 'start' to start turn and timer
-+ Clues appear in a randomly assigned order
-+ Player can see clues on screen with 'they guessed it' and 'skip' buttons
-+ Players can see whose turn is next while the timer is going
-+ Everyone connected to the game can see the timer countdown for each turn
-+ At the end of a term, the player whose turn it is can see the clues to read back to the group
-+ Score starts at 0. For each clue that a player is able to get her/his team to guess correctly, the score for the team goes up by 1. If a player chooses to 'skip' a clue, the score for the team is decremented by 1.
-+ At any point, any player can click a button to see a score breakdown page
-+ There are three rounds. Each round is over once all of the clues submitted by all of the players have been guessed.
-+ If a round ends in the middle of a player's turn, timer is stopped and the player gets new clues for the next round.
-+ The team with the most points at the end of the third round wins the game.
+#### 4. Play
+Game play happens in 60-second turns over the course of three rounds.
+
+##### Turns
+Each turn, a new player is the _clue-er_. The _clue-er_ and her or his team are the only active people in the turn. All other players listen to all the clues for future turns and future rounds.
+
+The goal of the _clue-er_ is to get teammates to guess as many clues as possible in 60 seconds. If a clue is guessed, the team gets one point. If the _clue-er_ decides to skip a clue, the team loses a point. 
+
+At the end of the turn, points for the turn get added to the team's score.
+
+##### Rounds
+The game is comprised of three rounds, and a given round ends when all clues have been guessed.
+
+##### Round 1: Any number of words
+_Clue-ers_ in round one can use any number of words to describe the clue. _Clue-ers_ can't use rhyming words or charades.
+
+##### Round 2: One word
+In round two, clues are shuffled then reused. _Clue-ers_ in round two can only use one word to describe the clue. _Clue-ers_ can use the single word repeatedly in a song (ie, clue Santa Claus by saying "ho ho ho" to the tune of "Rudolph the Rednosed Reindeer"). Remember that the clues are the same from the first round, so everyone has already heard the clue and a description at least once.
+
+##### Round 3: No words
+In round three, clues are shuffled then reused. _Clue-ers_ can't say anything this round--only acting. This will be the third time everyone has heard each clue.
+
+#### 5. Game end
+The team with the most points after all three rounds wins the game.
