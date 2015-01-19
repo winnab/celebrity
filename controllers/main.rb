@@ -1,0 +1,2 @@
+class Celebrity
+end

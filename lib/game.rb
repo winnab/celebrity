@@ -163,10 +163,8 @@ module Celebrity
       @timer = Timer.new
       @score = 0
       @current_clue = @remaining_clues.shift
-
       @timer.add_observer self
       @timer.run
-
     end
 
     def guessed_clue
@@ -182,7 +180,6 @@ module Celebrity
     end
 
     def update
-      # end of Turn
     end
 
     private
