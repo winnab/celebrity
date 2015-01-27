@@ -1,4 +1,6 @@
 require_relative "../controllers/invite"
+require "spec_helper"
+require "pry"
 
 describe Invite do
   let(:players) {

@@ -2,6 +2,7 @@ require_relative "../controllers/game"
 require_relative "../controllers/player"
 require_relative "../controllers/team"
 require_relative "../controllers/round"
+require "spec_helper"
 require "pry"
 
 describe Game do
