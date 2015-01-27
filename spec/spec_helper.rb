@@ -1,3 +1,5 @@
+require "./celebrity_app"
+require "sinatra"
 require "rspec"
 
 RSpec.configure do |config|
