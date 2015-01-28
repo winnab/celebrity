@@ -1,0 +1,17 @@
+language: ruby
+rvm:
+- 2.0.0
+
+# Don't install gems that Travis doesn't need.
+bundler_args: --without development
+
+# Run specs first, then cucumber features.
+script: bundle exec rspec && bundle exec cucumber
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: ENV["TRAVIS_KEY"]
+  app: celebrity-game
+  on:
+    repo: winnab/celebrity

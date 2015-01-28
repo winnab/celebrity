@@ -4,7 +4,6 @@ require_relative "../controllers/team"
 require_relative "../controllers/round"
 require_relative "../controllers/turn"
 require "spec_helper"
-require "pry"
 
 describe Timer do
   let(:players) {
