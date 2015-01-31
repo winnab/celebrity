@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/winnab/celebrity.svg?branch=master)](https://travis-ci.org/winnab/celebrity)
+
 # Celebrity
 
 ## Basic Setup
