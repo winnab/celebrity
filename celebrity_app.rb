@@ -13,8 +13,17 @@ get "/" do
   erb :index
 end
 
-post "/game_overview" do
-  @name = params["creator_name"]
+
+def self.get_or_post(url,&block)
+  get(url,&block)
+  post(url,&block)
+end
+
+get_or_post "/game_overview" do
+  session["creator_name"] = params["creator_name"] unless params["creator_name"].nil?
+  @name = session["creator_name"]
+  @players = []
+  @players << params["invite-email"] unless params["invite-email"].nil?
   erb :game_overview
 end
 

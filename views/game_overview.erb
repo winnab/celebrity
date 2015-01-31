@@ -3,4 +3,20 @@
 <h4>Players</h4>
 <ul>
   <li><%= @name %></li>
+  <% if @players.length > 0 %>
+    <li><%= @players.join(", ") %> <em>not joined</em></li>
+  <% end %>
 </ul>
+
+<h3>Invite Players</h3>
+<form
+  method="post"
+  accept-charset="utf-8"
+>
+  <label
+    for="invite-email">
+    Invite player:
+    <input type="text" name="invite-email" value="">
+  </label>
+  <button type="submit">Invite Player</button>
+</form>
