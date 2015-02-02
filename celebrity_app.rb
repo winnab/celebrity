@@ -17,3 +17,7 @@ post "/game_overview" do
   @name = params["creator_name"]
   erb :game_overview
 end
+
+get "/how_to_play" do
+  erb :how_to_play
+end
