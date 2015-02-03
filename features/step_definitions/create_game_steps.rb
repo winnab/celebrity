@@ -1,4 +1,4 @@
-require_relative "../../controllers/player.rb"
+require_relative "../../lib/player.rb"
 
 When(/^I input my name$/) do
   player = Player.new("Winna")

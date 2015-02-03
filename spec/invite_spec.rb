@@ -1,4 +1,4 @@
-require_relative "../controllers/invite"
+require_relative "../lib/invite"
 require "spec_helper"
 
 describe Invite do
