@@ -1,62 +1,27 @@
-begin
-  require "sinatra"
-rescue LoadError
-  require "rubygems"
-  require "sinatra"
-  require "sinatra/contrib/all"
-end
+ENV["RACK_ENV"] ||= "development"
 
-require "pony"
-require "pry"
-Pry.config.input = STDIN
-Pry.config.output = STDOUT
+require "bundler"
+Bundler.require :default, ENV["RACK_ENV"].to_sym
 
-enable :sessions
-set :session_secret, ENV["SESSION_KEY"]
+require_relative "app/routes/routes_map"
+require_relative "app/routes/routes_definitions/game_setup"
+require_relative "app/services/invite_mailer"
 
-Pony.options = {
-  from: "winnab@gmail.com",
-  via: :smtp,
-  via_options: {
-    address: "smtp.mandrillapp.com",
-    port: "25",
-    enable_starttls_auto: true,
-    user_name: ENV["MANDRILL_USERNAME"],
-    password: ENV["MANDRILL_APIKEY"],
-    authentication: "plain"
-  }
-}
+class CelebrityApp < Sinatra::Base
+  enable :sessions
 
-get "/" do
-  erb :index
-end
-
-def self.get_or_post(url,&block)
-  get(url,&block)
-  post(url,&block)
-end
-
-get_or_post "/game_overview" do
-  @players = []
-  session["creator_name"] = params["creator_name"] unless params["creator_name"].nil?
-  @name = session["creator_name"]
-  erb :game_overview
-end
-
-post "/invite" do
-  @players = []
-  if params["invite_email"] && params["invite_email"].size > 0
-    @players << params["invite_email"]
-    Pony.mail(
-      to: params["invite_email"],
-      from: Pony.options[:from],
-      subject: "Join my game!",
-      body: "Hey this is a link!"
-    )
+  # runs once, sets structure
+  configure do
+    set :root, File.dirname(__FILE__)
+    set :views, settings.root + '/app/views'
+    set :public_dir, settings.root + '/app/public'
+    set :session_secret, ENV["SESSION_KEY"]
   end
-  erb :game_overview
-end
 
-get "/how_to_play" do
-  erb :how_to_play
+  register Sinatra::CelebrityApp::Routing::Routes
+  register Sinatra::CelebrityApp::Routing::GameSetup
+
+  helpers Sinatra::CelebrityApp::Services::InviteMailer
+
+  run! if app_file == $0
 end

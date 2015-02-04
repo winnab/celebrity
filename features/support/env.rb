@@ -13,4 +13,4 @@ require "capybara/cucumber"
 require "capybara/rspec"
 require "pry"
 
-Capybara.app = Sinatra::Application
+Capybara.app = CelebrityApp
