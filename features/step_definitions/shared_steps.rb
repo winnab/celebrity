@@ -1,5 +1,3 @@
-require_relative "../../lib/game.rb"
-
 Given(/^I have created a game$/) do
   step "I am on the homepage"
   step "I input my name"
