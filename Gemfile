@@ -8,10 +8,11 @@ gem "pony"
 # server
 gem "rack", "1.4.1"
 
-group :test do
+group :test, :development do
   gem "capybara"
   gem "cucumber"
   gem "pry"
+  gem "rerun"
   gem "rspec"
 end
 
