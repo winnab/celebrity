@@ -7,6 +7,9 @@ rescue LoadError
 end
 
 require "pony"
+require "pry"
+Pry.config.input = STDIN
+Pry.config.output = STDOUT
 
 enable :sessions
 set :session_secret, ENV["SESSION_KEY"]
@@ -28,24 +31,25 @@ get "/" do
   erb :index
 end
 
-
 def self.get_or_post(url,&block)
   get(url,&block)
   post(url,&block)
 end
 
 get_or_post "/game_overview" do
+  @players = []
   session["creator_name"] = params["creator_name"] unless params["creator_name"].nil?
   @name = session["creator_name"]
-  @players = []
-  @players << params["invite-email"] unless params["invite-email"].nil?
+  erb :game_overview
+end
+
 post "/invite" do
   @players = []
-  if params["invite-email"].size > 0
-    @players << params["invite-email"]
+  if params["invite_email"] && params["invite_email"].size > 0
+    @players << params["invite_email"]
     Pony.mail(
-      to: params["invite-email"],
-      from: Pony.options.from,
+      to: params["invite_email"],
+      from: Pony.options[:from],
       subject: "Join my game!",
       body: "Hey this is a link!"
     )

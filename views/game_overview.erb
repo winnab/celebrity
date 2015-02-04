@@ -1,5 +1,6 @@
 <h2>Game Details</h2>
 <p>Welcome <%= @name %>! Here is everyone who has joined the game so far.</p>
+
 <h4>Players</h4>
 <ul>
   <li><%= @name %></li>
@@ -8,15 +9,16 @@
   <% end %>
 </ul>
 
-<h3>Invite Players</h3>
+<h4>Invite Players</h4>
 <form
   method="post"
   accept-charset="utf-8"
+  action="/invite"
 >
   <label
-    for="invite-email">
+    for="invite_email">
     Invite player:
-    <input type="text" name="invite-email" value="">
+    <input type="text" name="invite_email">
   </label>
   <button type="submit">Invite Player</button>
 </form>

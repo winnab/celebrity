@@ -57,7 +57,7 @@ GEM
     pusher-client (0.6.0)
       json
       websocket (~> 1.0)
-    rack (1.6.0)
+    rack (1.4.1)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.2)
@@ -105,6 +105,7 @@ DEPENDENCIES
   cucumber
   pony
   pry
+  rack (= 1.4.1)
   rspec
   sinatra
   travis
