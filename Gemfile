@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
 gem "sinatra"
+gem "pony"
 
 group :test do
   gem "capybara"

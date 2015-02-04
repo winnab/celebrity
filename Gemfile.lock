@@ -38,6 +38,8 @@ GEM
     json (1.8.2)
     launchy (2.4.3)
       addressable (~> 2.3)
+    mail (2.6.3)
+      mime-types (>= 1.16, < 3)
     method_source (0.8.2)
     mime-types (1.25.1)
     multi_json (1.10.1)
@@ -46,6 +48,8 @@ GEM
     net-http-persistent (2.9.4)
     net-http-pipeline (1.0.1)
     nokogiri (1.5.10)
+    pony (1.11)
+      mail (>= 2.0)
     pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -99,6 +103,8 @@ PLATFORMS
 DEPENDENCIES
   capybara
   cucumber
+  pony
+  pry
   rspec
   sinatra
   travis
