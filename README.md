@@ -15,6 +15,9 @@ $ source .env
 # Rerun watches files for changes
 $ rerun foreman start
 
+# Watches scss files and compiles css on change
+# TODO implement better compiler for scss files
+$ sass --watch app/lib/styles/main.scss:app/public/styles/main.css
 ```
 
 #### Test

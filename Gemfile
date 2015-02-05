@@ -2,6 +2,9 @@ source "https://rubygems.org"
 
 gem "sinatra"
 
+# assets
+gem "sass"
+
 #email
 gem "pony"
 

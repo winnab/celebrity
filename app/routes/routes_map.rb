@@ -7,6 +7,10 @@ module Sinatra
             erb :index
           end
 
+          app.get "/styles/main.css" do
+            scss :"../lib/styles/main.scss"
+          end
+
           app.post "/game_overview" do
             session["creator_name"] = params["creator_name"] unless params["creator_name"].nil?
             @name = session["creator_name"]
