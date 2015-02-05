@@ -1,8 +1,3 @@
-ENV["RACK_ENV"] ||= "development"
-
-require "bundler"
-Bundler.require :default, ENV["RACK_ENV"].to_sym
-
 require_relative "app/routes/routes_map"
 require_relative "app/routes/routes_definitions/game_setup"
 require_relative "app/services/invite_mailer"
@@ -10,6 +5,7 @@ require_relative "app/services/invite_mailer"
 class CelebrityApp < Sinatra::Base
   enable :sessions
 
+  # TODO move to a different file?
   # runs once, sets structure
   configure do
     set :root, File.dirname(__FILE__)
@@ -22,6 +18,4 @@ class CelebrityApp < Sinatra::Base
   register Sinatra::CelebrityApp::Routing::GameSetup
 
   helpers Sinatra::CelebrityApp::Services::InviteMailer
-
-  run! if app_file == $0
 end

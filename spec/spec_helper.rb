@@ -1,13 +1,13 @@
-require "./celebrity_app"
-require "sinatra"
-require "rspec"
+ENV["RACK_ENV"] = "test"
 
-RSpec.configure do |config|
+# TODO remove Bundler and explicitly require
+Bundler.require()
+
+require "./celebrity_app"
+
+RSpec.configure do | config |
   # Use color in STDOUT
   config.color = true
-
-  # Use color not only in STDOUT but also in pagers and files
-  config.tty = true
 
   # Use the specified formatter
   config.formatter = :documentation # :progress, :html, :textmate
