@@ -2,16 +2,20 @@
 <p>Welcome! Here is everyone who has been invited to the game so far.</p>
 
 <h4>Players</h4>
-<% if @players %>
+<% if @players.size > 0 %>
   <ul>
     <% @players.each do | player | %>
       <% if player == @creator_name %>
         <li><%= player %>, <em>game creator</em></li>
+      <% elsif player == @joined_player %>
+        <li><%= player[:email].downcase %>, <em><%= player[:status].downcase %></em></li>
       <% else %>
         <li><%= player %>, <em>invited but not joined</em></li>
       <% end %>
     <% end %>
   </ul>
+<% else %>
+  <p><em>No players have been added to this game.</em></p>
 <% end %>
 
 <%= erb :invite %>

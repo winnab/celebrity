@@ -15,6 +15,12 @@ module Sinatra
           app.get "/game_overview" do
             @creator_name = session["creator_name"]
             @players = session["players"] ||= []
+
+            if !!session["joined_player"]
+              @joined_player = session["joined_player"]
+              @players << session["joined_player"]
+            end
+
             erb :game_overview
           end
         end
