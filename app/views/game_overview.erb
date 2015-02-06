@@ -1,24 +1,17 @@
 <h2>Game Details</h2>
-<p>Welcome <%= @name %>! Here is everyone who has joined the game so far.</p>
+<p>Welcome! Here is everyone who has been invited to the game so far.</p>
 
 <h4>Players</h4>
-<ul>
-  <li><%= @name %></li>
-  <% if @players %>
-    <li><%= @players.join(", ") %> <em>not joined</em></li>
-  <% end %>
-</ul>
+<% if @players %>
+  <ul>
+    <% @players.each do | player | %>
+      <% if player == @creator_name %>
+        <li><%= player %>, <em>game creator</em></li>
+      <% else %>
+        <li><%= player %>, <em>invited but not joined</em></li>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>
 
-<h4>Invite Players</h4>
-<form
-  method="post"
-  accept-charset="utf-8"
-  action="/invite"
->
-  <label
-    for="invite_email">
-    Invite player:
-    <input type="text" name="invite_email">
-  </label>
-  <button type="submit">Invite Player</button>
-</form>
+<%= erb :invite %>
