@@ -3,8 +3,9 @@ module Sinatra
     module Services
       module InviteMailer
         def self.send_mail recipient
+          recipient = "test@example" # TODO add this back in for prod
           Pony.options = {
-            from: "winnab@gmail.com",
+            from: "test@example.com",
             via: :smtp,
             via_options: {
               address: "smtp.mandrillapp.com",
