@@ -11,7 +11,7 @@ script: bundle exec rspec && bundle exec cucumber
 deploy:
   provider: heroku
   api_key:
-    secure: ENV["TRAVIS_KEY"]
+    secure: UEghWfTrAtiEVmiwSUgFrD/Nc+B2lsccIZjj1oJ2O6OAhpG2qgf4+kZKJPgZgkLQyomKpyMWQB8+UjYnwdIgxs7sospf/+eqxyOK7XTUv1sy7aVKun/8jU2F5CAUA+eRQLGW/0WoJ+s6yZf6QP3RUGG4uO4iuw0o0Re1KxGjAT0=
   app: celebrity-game
   on:
     repo: winnab/celebrity
