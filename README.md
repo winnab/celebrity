@@ -44,10 +44,12 @@ $ bundle exec rspec
 
 ```
 
-### Heroku
 
-*Note:* be sure you have Heroku Toolbelt
+### Travis CI and Heroku
+* Evey branch that gets pushed to Github (e.g. `git push -u origin master`) is tested with TravisCI
+* Cucumber and RSpec tests run for each build
+* The `master` branch is tested with TravisCI _then_ TravisCI automatically pushes to Heroku if the build passed
 
-* Deploy: `git push heroku [local-name]:master`
+####  Heroku Debugging
 * Log: `heroku logs`
 * Get console: `heroku run`
