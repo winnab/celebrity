@@ -1,21 +1,5 @@
 <% if @creator_name %>
   <p>Welcome to the Celebrity game created by <%= @creator_name %>.</p>
 <% else %>
-  <form method="POST" action="/game_overview">
-    <h4>Create a game</h4>
-    <label>
-      Your name:
-      <br>
-      <input
-        type="text"
-        name="creator_name"
-        placeholder="Enter your name"
-      >
-    </label>
-    <br>
-    <input
-      type="submit"
-      value="Create Game!"
-    >
-  </form>
+  <%= erb :create_game %>
 <% end %>
