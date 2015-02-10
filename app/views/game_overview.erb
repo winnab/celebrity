@@ -1,8 +1,7 @@
 <h2>Game Details</h2>
-<p>Welcome! Here is everyone who has been invited to the game so far.</p>
-
-<h4>Players</h4>
 <% if @players.size > 0 %>
+  <p>Welcome! Here is everyone who has been invited to the game so far.</p>
+  <h4>Players</h4>
   <ul>
     <% @players.each do | player | %>
       <% if player == @creator_name %>
