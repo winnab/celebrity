@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,19 +10,10 @@
   <link rel="stylesheet" type="text/css" href="styles/main.css"/>
 </head>
 <body>
-  <h1>Celebrity!</h1>
-  <a href="/">Home</a>
-  <br>
-  <a href="/how_to_play">How to Play</a>
-  <br>
-  <a href="/game_overview">Game Overview</a>
-  <br>
-  <a href="/join">Join</a>
-  <br>
-  <a href="/clear">Clear</a>
-
+  <%= erb :header %>
   <section>
     <%= yield %>
   </section>
+  <%= erb :footer %>
 </body>
 </html>
