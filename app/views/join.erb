@@ -1,64 +1,71 @@
-<h4>Join the Game</h4>
+<!-- form -->
+<h2>Join the game</h2>
 <form
-  method="post"
-  accept-charset="utf-8"
   action="/join"
+  method="post"
 >
-  <label for="join_email">
-    Your Email:
+  <fieldset>
+    <legend>Your details</legend>
+    <label for="name">
+      Your Name
+    </label>
     <input
+      id="name"
+      type="text"
+      placeholder="Your Name"
+    >
+
+    <label for="email">
+      Your Email
+    </label>
+    <input
+      id="email"
       type="email"
-      name="join_email"
+      placeholder="Your Email"
     >
-  </label>
-  <br>
+  </fieldset>
 
-  <label for="clue_1">
-    Clue 1:
-    <input
-      type="text"
-      name="clue_1"
-    >
-  </label>
-  <br>
+  <fieldset>
+    <legend>Your Clues</legend>
+    <label for="clue_1">
+      <input
+        type="text"
+        name="clue_1"
+        placeholder="Clue 1"
+      >
+    </label>
 
-  <label for="clue_2">
-    Clue 2:
-    <input
-      type="text"
-      name="clue_2"
-    >
-  </label>
-  <br>
+    <label for="clue_2">
+      <input
+        type="text"
+        name="clue_2"
+        placeholder="Clue 2"
+      >
+    </label>
 
-  <label for="clue_3">
-    Clue 3:
-    <input
-      type="text"
-      name="clue_3"
-    >
-  </label>
-  <br>
+    <label for="clue_3">
+      <input
+        type="text"
+        name="clue_3"
+        placeholder="Clue 3"
+      >
+    </label>
 
+    <label for="clue_4">
+      <input
+        type="text"
+        name="clue_4"
+        placeholder="Clue 4"
+      >
+    </label>
 
-  <label for="clue_4">
-    Clue 4:
-    <input
-      type="text"
-      name="clue_4"
-    >
-  </label>
-  <br>
-
-  <label for="clue_5">
-    Clue 5:
-    <input
-      type="text"
-      name="clue_5"
-    >
-  </label>
-  <br>
-
-
-  <button type="submit">Join Game</button>
+    <label for="clue_5">
+      <input
+        type="text"
+        name="clue_5"
+        placeholder="Clue 5"
+      >
+    </label>
+  </fieldset>
+  <button type="submit">Join Game!</button>
 </form>
