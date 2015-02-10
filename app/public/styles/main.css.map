@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "AAAA,MAAO;EACL,cAAc,EAAE,IAAI;;ACCtB,IAAK;EACH,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,4BAA4B",
-"sources": ["../../lib/styles/includes/header.scss","../../lib/styles/main.scss"],
+"mappings": "AAGA,IAAK;EACH,UAAU,EAAE,UAAU;;AAGxB,oBAAqB;EACnB,UAAU,EAAE,OAAO;;AAGrB,IAAK;EACH,gBAAgB,ECPH,OAAO;EDQpB,OAAO,EAAE,IAAI;;AAGf,KAAM;EACJ,WAAW,EEhBe,4BAAS;EFiBnC,WAAW,EEZc,GAAG;EFa5B,WAAW,EEZc,MAA6B;;;ACJtD;;;;;UAKG;EACD,KAAK,EFFM,OAAO;EEGlB,WAAW,EDRQ,yBAAkB;ECSrC,SAAS,EDDe,IAAI;ECE5B,WAAW,EDDe,GAAG;ECE7B,WAAW,EDDe,IAAgC;ECE1D,MAAM,EAAE,YAAyC;;ACdrD,MAAO;EACL,WAAW,EFCU,yBAAkB;EEAvC,WAAW,EFWe,GAAG;EEV7B,cAAc,EFES,IAAI;;AEE3B,YAAG;EACD,UAAU,EHNA,OAAO;EGOjB,KAAK,EAAE,KAAK;EACZ,OAAO,EAAE,YAAY;EACrB,MAAM,EAAE,KAAK;EACb,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,IAAI;EACjB,eAAe,EAAE,IAAI;EAErB,iBAAO;IACL,UAAU,EAAE,IAAI;IAChB,KAAK,EHjBG,OAAO;IGkBf,UAAU,EAAE,MAAM;IAClB,WAAW,EFPW,GAAG",
+"sources": ["../../lib/styles/main.scss","../../lib/styles/includes/color_definitions.scss","../../lib/styles/includes/typography_definitions.scss","../../lib/styles/includes/article.scss","../../lib/styles/includes/header.scss"],
 "names": [],
 "file": "main.css"
 }

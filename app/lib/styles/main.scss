@@ -1,6 +1,25 @@
-@import 'includes/header';
+@import 'includes/color_definitions';
+@import 'includes/typography_definitions';
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 
 body {
-  padding: 50px;
-  font-family: Helvetica, Arial, sans-serif;
+  background-color: $light-blue-2;
+  padding: 20px;
 }
+
+p, ul {
+  font-family: $celebrity-sans-serif-font;
+  font-weight: $default-body-font-weight;
+  line-height: $default-body-line-height;
+}
+
+/* external file for specific elements */
+@import 'includes/article';
+@import 'includes/header';

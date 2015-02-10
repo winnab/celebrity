@@ -11,6 +11,10 @@ module Sinatra
             session.clear
             redirect to("/")
           end
+
+          app.get "/styleguide" do
+            erb :styleguide
+          end
         end
       end
     end
