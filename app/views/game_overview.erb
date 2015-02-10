@@ -7,7 +7,7 @@
       <% if player == @creator_name %>
         <li><%= player %>, <em>game creator</em></li>
       <% elsif player == @joined_player %>
-        <li><%= player[:email].downcase %>, <em><%= player[:status].downcase %></em></li>
+        <li><%= player[:email] %>, <em><%= player[:status] %></em></li>
       <% else %>
         <li><%= player %>, <em>invited but not joined</em></li>
       <% end %>
