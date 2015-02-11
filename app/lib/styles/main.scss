@@ -1,5 +1,5 @@
-@import 'includes/color_definitions';
-@import 'includes/typography_definitions';
+@import 'vars/color_definitions';
+@import 'vars/typography_definitions';
 
 html {
   box-sizing: border-box;
@@ -10,16 +10,29 @@ html {
 }
 
 body {
-  background-color: $light-blue-2;
-  padding: 20px;
+  background-color: $blue-light-2;
 }
 
-p, ul {
-  font-family: $celebrity-sans-serif-font;
-  font-weight: $default-body-font-weight;
-  line-height: $default-body-line-height;
+section.container {
+  padding: 20px 40px;
+
+  p, ul {
+    font-family: $celebrity-sans-serif-font;
+    font-weight: $default-body-font-weight;
+    line-height: $default-body-line-height;
+  }
+
+  p {
+    margin: 8px 0;
+  }
+
+  /* separate files for element-specific styles */
+  @import 'includes/articles';
+  @import 'includes/forms';
+  @import 'includes/headings';
 }
 
-/* external file for specific elements */
-@import 'includes/article';
-@import 'includes/header';
+/* separate files for region-specific styles */
+@import 'includes/site_footer';
+@import 'includes/site_nav';
+

@@ -1,5 +1,5 @@
 Given(/^I enter a player's email address$/) do
-  page.fill_in("Invite player", with: "bob@example.com")
+  page.fill_in("invite_email", with: "bob@example.com")
 end
 
 When(/^I click the Invite Player button$/) do

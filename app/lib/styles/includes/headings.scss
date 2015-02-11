@@ -1,0 +1,16 @@
+$half-line: $default-body-font-size / 2;
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $green-dark-2;
+  font-family: $celebrity-serif-font;
+  font-size: $default-heading-font-size;
+  font-weight: $default-heading-font-weight;
+  line-height: $default-heading-line-height;
+  margin: $default-heading-font-size 0 $half-line 0;
+}
+

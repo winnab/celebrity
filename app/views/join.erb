@@ -1,18 +1,18 @@
 <!-- form -->
-<h2>Join the game</h2>
+<h2>Join a game</h2>
 <form
   action="/join"
   method="post"
 >
   <fieldset>
-    <legend>Your details</legend>
+    <legend>About You</legend>
     <label for="name">
       Your Name
     </label>
     <input
       id="name"
       type="text"
-      placeholder="Your Name"
+      placeholder="First Last"
     >
 
     <label for="email">
@@ -21,51 +21,68 @@
     <input
       id="email"
       type="email"
-      placeholder="Your Email"
+      placeholder="test@example.com"
     >
   </fieldset>
 
   <fieldset>
     <legend>Your Clues</legend>
-    <label for="clue_1">
-      <input
-        type="text"
-        name="clue_1"
-        placeholder="Clue 1"
-      >
-    </label>
 
-    <label for="clue_2">
-      <input
-        type="text"
-        name="clue_2"
-        placeholder="Clue 2"
-      >
+    <label
+      class="clue-label"
+      for="clue_1"
+    >
+      Clue 1
     </label>
+    <input
+      type="text"
+      name="clue_1"
+      placeholder="Clue 1"
+    >
 
-    <label for="clue_3">
-      <input
-        type="text"
-        name="clue_3"
-        placeholder="Clue 3"
-      >
+    <label for="clue_2"
+      class="clue-label"
+    >
+      Clue 2
     </label>
+    <input
+      type="text"
+      name="clue_2"
+      placeholder="Clue 2"
+    >
 
-    <label for="clue_4">
-      <input
-        type="text"
-        name="clue_4"
-        placeholder="Clue 4"
-      >
+    <label for="clue_3"
+      class="clue-label"
+    >
+      Clue 3
     </label>
+    <input
+      type="text"
+      name="clue_3"
+      placeholder="Clue 3"
+    >
 
-    <label for="clue_5">
-      <input
-        type="text"
-        name="clue_5"
-        placeholder="Clue 5"
-      >
+    <label for="clue_4"
+      class="clue-label"
+    >
+      Clue 4
     </label>
+    <input
+      type="text"
+      name="clue_4"
+      placeholder="Clue 4"
+    >
+
+    <label for="clue_5"
+      class="clue-label"
+    >
+      Clue 5
+    </label>
+    <input
+      type="text"
+      name="clue_5"
+      placeholder="Clue 5"
+    >
   </fieldset>
   <button type="submit">Join Game!</button>
 </form>

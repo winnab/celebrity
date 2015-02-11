@@ -1,0 +1,41 @@
+header {
+  background-color: $acqua-dark-2;
+  font-family: $celebrity-serif-font;
+  font-weight: $heavy-heading-font-weight;
+  padding: 10px 20px 20px;
+}
+
+header nav {
+  a  {
+    background-color: $acqua-dark-1;
+    color: $almost-white;
+    display: inline-block;
+    margin: 8px 6px 0 0;
+    padding: 12px;
+    padding-top: 10px;
+    text-decoration: none;
+  }
+
+  &.home {
+    a {
+      background: none;
+      font-size: 1.25em;
+      font-style: italic;
+      font-weight: $heavy-heading-font-weight;
+    }
+  }
+
+  &.dev {
+    margin-top: 10px;
+
+    a {
+      background: $yellow-dark-2;
+      color: $almost-white;
+      font-family: 'Dosis', sans-serif;
+      font-weight: $light-heading-font-weight;
+      letter-spacing: 0.0714em; /* 1px / font-size [ex: 16]  = letter-spacing [ex: 0.0625]  */
+      padding-top: 12px;
+      text-transform: uppercase;
+    }
+  }
+}

@@ -1,11 +1,20 @@
 <!-- header -->
 <header>
+  <nav class="home">
+    <a href="/">Celebrity!</a>
+  </nav>
   <nav>
-    <a class="logo" href="/">Celebrity!</a>
-    <a href="how_to_play">How to Play</a>
-    <a href="game_overview">Your Game</a>
+    <a href="/">Create</a>
     <a href="/join">Join</a>
-    <a href="/clear">Clear</a>
+    <br>
+    <a href="game_overview">Current</a>
+    <a href="how_to_play">Rules</a>
+  </nav>
+
+  <!-- show conditionally if in dev env -->
+  <nav class="dev">
+    <a href="/clear">// Clear Session</a>
+    <a class="dev" href="/styleguide">// Styles</a>
   </nav>
 </header>
 <!-- / header -->
