@@ -14,8 +14,8 @@ class CelebrityApp < Sinatra::Base
   # runs once, sets structure
   configure do
     set :root, File.dirname(__FILE__)
-    set :views, settings.root + '/app/views'
-    set :public_dir, settings.root + '/app/public'
+    set :views, settings.root + "/app/views"
+    set :public_dir, settings.root + "/app/public"
     set :session_secret, ENV["SESSION_KEY"]
   end
 
