@@ -1,5 +1,4 @@
 require_relative "../../core/player"
-require "pry"
 
 module Sinatra
   module CelebrityApp
