@@ -1,19 +1,37 @@
-<h2>Create a game</h2>
 <form
   method="POST"
   action="/game_overview"
 >
+  <h2>Create a game</h2>
+  <p>Required fields are followed by <strong><abbr title="required">*</abbr></strong>.</p>
+
   <fieldset>
+    <legend>Enter your details</legend>
     <label
       for="creator_name"
     >
       Your name
+      <strong><abbr title="required">*</abbr></strong>
+      <input
+        type="text"
+        name="creator_name"
+        id="creator_name"
+        placeholder="Enter your name"
+      >
     </label>
-    <input
-      type="text"
-      name="creator_name"
-      placeholder="Enter your name"
+    
+    <label
+      for="creator_email"
     >
+      Your email address
+      <strong><abbr title="required">*</abbr></strong>
+      <input
+        type="email"
+        name="creator_email"
+        id="creator_email"
+        placeholder="test@example.com"
+      >
+    </label>
   </fieldset>
   <button type="submit">
     Create Game!
