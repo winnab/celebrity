@@ -1,13 +1,20 @@
+<h2>Join a game of Celebrity!</h2>
+<p>
+  <%= @creator_name %> has invited you to join in a game of Celebrity. Fill out the form below and we'll get started.
+</p>
+
+
 <!-- form -->
-<h2>Join a game</h2>
 <form
   action="/join"
   method="post"
 >
+  <p>Required fields are followed by <strong><abbr title="required">*</abbr></strong>.</p>
+
   <fieldset>
     <legend>About You</legend>
     <label for="name">
-      Your Name
+      Your Name <strong><abbr title="required">*</abbr></strong>
     </label>
     <input
       id="name"
@@ -16,7 +23,7 @@
     >
 
     <label for="email">
-      Your Email
+      Your Email <strong><abbr title="required">*</abbr></strong>
     </label>
     <input
       id="email"
@@ -26,7 +33,7 @@
   </fieldset>
 
   <fieldset>
-    <legend>Your Clues</legend>
+    <legend>Your Clues <strong><abbr title="required">*</abbr></strong></legend>
 
     <label
       class="clue-label"
