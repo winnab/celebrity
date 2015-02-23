@@ -6,7 +6,7 @@ module Sinatra
       module Join
         def self.registered(app)
           app.get "/join" do
-            if session["creator_name"].size > 0
+            if session["creator_name"] && session["creator_name"].size > 0
               @creator_name =  session["creator_name"]
             end
             erb :join
