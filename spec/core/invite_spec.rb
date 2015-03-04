@@ -1,4 +1,4 @@
-require_relative "../app/core/invite"
+require_relative "../../app/core/invite"
 require "spec_helper"
 
 describe Invite do

@@ -1,8 +1,8 @@
-require_relative "../app/core/game"
-require_relative "../app/core/player"
-require_relative "../app/core/team"
-require_relative "../app/core/round"
-require_relative "../app/core/turn"
+require_relative "../../app/core/game"
+require_relative "../../app/core/player"
+require_relative "../../app/core/team"
+require_relative "../../app/core/round"
+require_relative "../../app/core/turn"
 require "spec_helper"
 
 describe Turn do
