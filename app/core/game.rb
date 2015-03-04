@@ -1,5 +1,6 @@
 class Game
   attr_accessor :players, :num_teams, :teams, :clues, :current_player_ix, :current_team, :current_round, :lineup
+  attr_reader :id
 
   MIN_NUM_PLAYERS = 6
 
@@ -11,6 +12,7 @@ class Game
     @current_player_ix = 0
     @current_team = nil
     @current_round = start_round
+    @id = SecureRandom.uuid
   end
 
   def create_players players

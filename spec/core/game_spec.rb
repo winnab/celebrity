@@ -26,6 +26,10 @@ describe Game do
   context "valid game" do
     let(:team) { game.teams[0] }
 
+    it "has an id" do
+      expect(game.id.length).to be > 10
+    end
+
     it "has teams" do
       expect(team).to be_a(Team)
     end
