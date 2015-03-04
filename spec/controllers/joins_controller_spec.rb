@@ -3,10 +3,8 @@ require_relative "../../app/controllers/joins_controller"
 
 describe CelebrityApp do
   it "allows players to join" do
-    app.post "/joins"
-    expect(last_response.status).to eql(200)
+    post "/join"
+    expect(last_response.status).to eql(302)
+    expect(last_response.header["location"]).to include('/game_overview')
   end
-
-  # edge cases (ie post from curl or empty form etc)
-  # when someone joins after game ends
 end
