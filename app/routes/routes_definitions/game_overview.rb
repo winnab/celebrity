@@ -1,3 +1,5 @@
+require_relative "../../core/game"
+
 module Sinatra
   module CelebrityApp
     module Routing
@@ -5,14 +7,18 @@ module Sinatra
         def self.registered(app)
           app.post "/game_overview" do
             @players = session["players"] ||= []
+
             if params["creator_name"].size > 0
               @creator_name = session["creator_name"] = params["creator_name"]
               @players << @creator_name
             end
-            erb :game_overview
+
+            game = Game.new(@players, 2, false)
+
+            redirect to("/game_overview/#{game.id}")
           end
 
-          app.get "/game_overview" do
+          app.get "/game_overview/:game_id" do
             @creator_name = session["creator_name"]
             @players = session["players"] ||= []
 
