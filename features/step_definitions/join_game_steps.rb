@@ -1,5 +1,6 @@
 Given(/^I am on the Join the Game page$/) do
-  visit "/join"
+  game_id = Capybara.app.settings.game_store.list.last.id
+  visit "/join/#{game_id}"
 end
 
 When(/^I input my email address$/) do

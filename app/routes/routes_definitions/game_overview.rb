@@ -14,6 +14,7 @@ module Sinatra
             end
 
             game = Game.new(@players, 2, false)
+            app.game_store.add(game)
 
             redirect to("/game_overview/#{game.id}")
           end

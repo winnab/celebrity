@@ -8,7 +8,7 @@ class Game
 
   def initialize players, num_teams = 2, start_game = true
     @num_teams = num_teams
-    @players = create_players players
+    @players = players
     @id = SecureRandom.uuid
     start if start_game
   end
@@ -19,6 +19,7 @@ class Game
     @current_player_ix = 0
     @current_team = nil
     @current_round = start_round
+    @players = create_players @players # change constructor
   end
 
   def create_players players

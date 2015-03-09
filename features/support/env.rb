@@ -15,10 +15,4 @@ rescue LoadError
   require "spec/expectations"
 end
 
-# TODO is this right?
-Capybara.app, _ = Rack::Builder.parse_file(
-  File.expand_path(
-    File.dirname(__FILE__) + "/../../config.ru",
-    __FILE__
-  )
-)
+Capybara.app = CelebrityApp.new
