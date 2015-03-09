@@ -13,7 +13,10 @@ module Sinatra
               @players << @creator_name
             end
 
-            game = Game.new(@players, 2, false)
+            game = Game.new({
+              name: params["creator_name"],
+              clues: []
+            })
             app.game_store.add(game)
 
             redirect to("/game_overview/#{game.id}")

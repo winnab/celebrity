@@ -21,7 +21,7 @@ describe Turn do
 
   let(:num_teams) { 2 }
 
-  let(:game) { Game.new(players_obj, num_teams) }
+  let(:game) { Game.new(players_obj.first).start(players_obj, num_teams) }
 
   let(:round) { game.current_round }
 

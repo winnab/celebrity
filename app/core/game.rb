@@ -6,24 +6,24 @@ class Game
 
   MIN_NUM_PLAYERS = 6
 
-  def initialize players, num_teams = 2, start_game = true
-    @num_teams = num_teams
-    @players = players
+  def initialize creator
+    create_players [creator]
     @id = SecureRandom.uuid
-    start if start_game
   end
 
-  def start
-    @teams = create_teams num_teams
-    @clues = collect_clues
+  def start players, num_teams = 2
+    @num_teams = num_teams
     @current_player_ix = 0
     @current_team = nil
+    create_players players # change constructor
+    @clues = collect_clues
+    @teams = create_teams num_teams
     @current_round = start_round
-    @players = create_players @players # change constructor
+    self
   end
 
   def create_players players
-    @players = []
+    @players = @players || []
     players.each { | p | @players << Player.new(p[:name], p[:clues]) }
     @players.shuffle!
     @players

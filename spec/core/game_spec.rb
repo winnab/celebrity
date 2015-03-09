@@ -21,7 +21,7 @@ describe Game do
 
   let(:num_teams) { 2 }
 
-  let(:game) { Game.new(players_obj, num_teams) }
+  let(:game) { Game.new(players_obj.first).start(players_obj, num_teams) }
 
   context "valid game" do
     let(:team) { game.teams[0] }
@@ -59,7 +59,7 @@ describe Game do
 
   context "invalid game" do
     context "having fewer than 6 players" do
-      let(:game) { Game.new(players_obj[0, 4], num_teams) }
+      let(:game) { Game.new(players_obj[0]).start(players_obj[1, 4], num_teams) }
       it "cannot be started" do
         expect(game.can_start?).to be false
       end
