@@ -12,9 +12,32 @@
   <link rel="stylesheet" type="text/css" href="/styles/main.css"/>
 </head>
 <body>
-  <%= erb :header %>
+  <!-- header -->
+  <header>
+    <nav class="home">
+      <a href="/">Celebrity!</a>
+    </nav>
+    <nav>
+      <a href="game_overview">Current</a>
+      <a href="how_to_play">Rules</a>
+    </nav>
+
+    <!-- show conditionally if in dev env -->
+    <nav class="dev">
+      <a href="/clear">// Clear Session</a>
+    </nav>
+  </header>
+  <!-- / header -->
+
+
   <section class="container">
     <%= yield %>
   </section>
+
+  <!-- footer -->
+  <footer>
+    <p>Fun for everyone!</p>
+  </footer>
+  <!-- / footer -->
 </body>
 </html>
