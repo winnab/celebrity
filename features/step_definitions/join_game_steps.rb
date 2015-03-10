@@ -13,8 +13,8 @@ When(/^I input (\d+) clues$/) do | num_clues |
   end
 end
 
-When(/^I click the Join Game button$/) do
-  click_button "Join Game"
+When(/^I click the Join Game and Send Invites button$/) do
+  click_button "Join Game and Send Invites"
 end
 
 Then(/^I see the Game Overview page$/) do

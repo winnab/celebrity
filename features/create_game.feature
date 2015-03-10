@@ -3,5 +3,7 @@ Feature: Create a Game
     Given I am on the homepage
     And   I input my name
     And   I input my email
+    And   I input 5 clues
+    And   I input 5 email addresses
     And   I click the Create Game button
-    Then  I see the new game with myself as the only user
+    Then  I see the new game with my name and the email addresses
