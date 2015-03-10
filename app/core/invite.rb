@@ -1,24 +1,25 @@
 class Invite
-  attr_accessor :sender, :recipients
+  attr_accessor :sender, :recipient, :game_id
 
-  def initialize sender, recipients
+  def initialize sender, recipient, game_id
     @sender = sender
-    @recipients = recipients
+    @recipient = recipient
+    @game_id = game_id
   end
 
   def has_sender?
     !(@sender[:name].empty? && @sender[:email].empty?)
   end
 
-  def has_recipient_emails?
-    @recipients.all? { | r | r[:email] }
+  def has_recipient_email?
+    !@recipient[:email].empty?
   end
 
-  def has_recipient_names?
-    @recipients.all? { | r | r[:name] }
+  def has_recipient_name?
+    !@recipient[:name].empty?
   end
 
-  def has_valid_recipients?
-    has_recipient_emails? && has_recipient_names?
+  def has_valid_recipient?
+    has_recipient_email? && has_recipient_name?
   end
 end
