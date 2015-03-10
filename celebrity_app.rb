@@ -9,8 +9,6 @@ require_relative "app/routes/routes_definitions/utils"
 require_relative "app/services/game_store"
 require_relative "app/services/invite_mailer"
 
-require "better_errors"
-
 class CelebrityApp < Sinatra::Base
   enable :sessions
 
@@ -25,9 +23,6 @@ class CelebrityApp < Sinatra::Base
 
   end
 
-  configure :development do
-    use BetterErrors::Middleware
-    BetterErrors.application_root = File.expand_path('..', __FILE__)
   end
 
   register Routes
