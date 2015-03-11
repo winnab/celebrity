@@ -13,8 +13,23 @@ describe CelebrityApp do
   end
 
   it "allows players to join" do
+    new_player = {
+      name: "Test",
+      email: "test@example.com",
+      clues: ["a", "a", "a", "a", "a"]
+    }
+    new_invite = Invite.new({
+        name: "Tob",
+        email: "tob@example.com"
+      }, {
+        name: new_player[:name],
+        email: new_player[:email]
+      },
+      game.id
+    )
     app.settings.game_store.add(game)
-    post "/join/#{game.id}"
+    app.settings.invite_store.add(new_invite)
+    post "/join/#{game.id}/#{new_player[:email]}"
     expect(last_response.status).to eql(302)
     expect(last_response.header["location"]).to include("/game_overview/#{game.id}")
   end
