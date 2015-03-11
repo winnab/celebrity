@@ -1,5 +1,5 @@
 class InviteMailer
-  def self.send_mail recipient
+  def send_mail recipient, game_id
     recipient = "test@example" # TODO add this back in for prod
     Pony.options = {
       from: "test@example.com",
@@ -17,7 +17,7 @@ class InviteMailer
     Pony.mail(
       to: recipient,
       from: Pony.options[:from],
-      subject: "Different files! Join my game!",
+      subject: "Different files! Join my game #{game_id}!",
       body: "Hey hey, this is a message!!"
     )
   end

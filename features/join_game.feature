@@ -1,6 +1,7 @@
 Feature: Join a Game
   Background: Players are invited to the game via email.
     Given I have created a game
+      And I have been invited to the game
 
   Scenario: Join a game after clicking a link in the invitation email
     Given I am on the Join the Game page

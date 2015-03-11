@@ -1,10 +1,19 @@
+Given(/^I have been invited to the game$/) do
+  game_id = Capybara.app.settings.game_store.list.last.id
+  new_invite = Invite.new({ name: "Sender", email: "sender@email.com" },
+    { name: "Recipient", email: "recipient@email.com" },
+    game_id)
+  Capybara.app.settings.invite_store.add(new_invite)
+  visit "/join/#{game_id}/recipient@email.com"
+end
+
 Given(/^I am on the Join the Game page$/) do
   game_id = Capybara.app.settings.game_store.list.last.id
-  visit "/join/#{game_id}"
+  visit "/join/#{game_id}/recipient@email.com"
 end
 
 When(/^I input my email address$/) do
-  page.fill_in("Your Email", with: "celeb_fun_wow@example.com")
+  page.fill_in("Your Email", with: "recipient@email.com")
 end
 
 When(/^I input (\d+) clues$/) do | num_clues |
@@ -13,8 +22,8 @@ When(/^I input (\d+) clues$/) do | num_clues |
   end
 end
 
-When(/^I click the Join Game and Send Invites button$/) do
-  click_button "Join Game and Send Invites"
+When(/^I click the Join Game button$/) do
+  click_button "Join Game!"
 end
 
 Then(/^I see the Game Overview page$/) do
@@ -22,5 +31,5 @@ Then(/^I see the Game Overview page$/) do
 end
 
 Then(/^I see my email address listed as joined in the list of players$/) do
-  pending # expect(page).to have_content "celeb_fun_wow@example.com"
+  expect(page).to have_content "recipient@email.com"
 end

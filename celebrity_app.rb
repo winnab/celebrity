@@ -41,8 +41,6 @@ class CelebrityApp < Sinatra::Base
 
     settings.game_store.add(game)
 
-    invite_sender =
-
     invite_recipients = [{
       name: "friend_1",
       email: params["friend_1"]
@@ -72,15 +70,14 @@ class CelebrityApp < Sinatra::Base
       settings.invite_store.add(invite)
     end
 
-
     redirect to("/game_overview/#{ game.id }")
   end
 
   get "/game_overview/:game_id" do
     game = settings.game_store.find(params["game_id"])
-    invite = settings.invite_store.find_by_game_id(params["game_id"])
+    invites = settings.invite_store.find_all_by_game_id(params["game_id"])
     @player_names = game.players.map(&:name)
-    @invited_names_and_emails = invite.recipients
+    @invited_names_and_emails = invites.map { | i | { name: i.recipient[:name], email: i.recipient[:email] } }
     @game_id = game.id
     erb :game_overview
   end
@@ -91,25 +88,32 @@ class CelebrityApp < Sinatra::Base
 
   post "/invite/:game_id" do
     game = settings.game_store.find(params["game_id"])
-    invite = settings.invite_store.find_by_game_id(params["game_id"])
-    @player_names = game.players.map(&:name)
-    @invited_names_and_emails = invite.recipients
-    @game_id = game.id
-    settings.invite_mailer.send_mail params["invite_email"]
+
+    new_invite = Invite.new({
+        name: params[:sender_name],
+        email: params[:sender_email]
+      }, {
+        name: params[:invite_name],
+        email: params[:invite_email]
+      },
+      game.id
+    )
+    settings.invite_store.add(new_invite)
+
+    settings.invite_mailer.send_mail params["invite_email"], game.id
     redirect to("/game_overview/#{game.id}")
   end
 
-  get "/join/:game_id" do
-    if session["creator_name"] && session["creator_name"].size > 0
-      @creator_name =  session["creator_name"]
-    end
+  get "/join/:game_id/:email" do
+    game = settings.game_store.find(params["game_id"])
     erb :join
   end
 
-  post "/join/:game_id" do
+  post "/join/:game_id/:email" do
     game = settings.game_store.find(params[:game_id])
+    invite = settings.invite_store.find_by_email_and_game_id(params[:email], params[:game_id]).first
     game.create_players([{
-      name: params[:name],
+      name: invite.recipient[:name],
       clues: [
         params["clue_1"],
         params["clue_2"],

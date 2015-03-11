@@ -15,8 +15,14 @@ class InviteStore
     store << invite unless store.include?(invite)
   end
 
-  def find_by_game_id game_id
-    store.find { |invite| invite.game_id == game_id }
+  def find_all_by_game_id game_id
+    store.select { |invite| invite.game_id == game_id }
+  end
+
+  def find_by_email_and_game_id email, game_id
+    store.select do |invite|
+      invite.recipient[:email] == email && invite.game_id == game_id
+    end
   end
 
   private
