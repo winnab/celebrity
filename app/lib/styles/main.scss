@@ -1,6 +1,14 @@
 @import 'vars/color_definitions';
 @import 'vars/typography_definitions';
 
+@mixin clearfix () {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
 html {
   box-sizing: border-box;
 }
@@ -30,9 +38,12 @@ section.container {
   @import 'includes/articles';
   @import 'includes/forms';
   @import 'includes/headings';
+
+  // separate files for page-specific styles
+  @import 'includes/active_game_overview';
 }
+
 
 /* separate files for region-specific styles */
 @import 'includes/site_footer';
 @import 'includes/site_nav';
-

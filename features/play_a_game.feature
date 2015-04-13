@@ -1,11 +1,24 @@
-Feature: Play a sample game
+Feature: Play a game
   Background:
     As a player
     So that I can get into the actual gameplay quickly
     I want to be able to play a demo game without filling in forms
 
   Scenario: A minimal game
-    Given the next sample game will set team and player order as follows:
+    Given Neil has created a game
+    And his email address is "neil@example.com"
+    And he invited players to the game
+      | players | email  |
+      | Winna   | winna@example.com     |
+      | Divya   | divya@example.com     |
+      | Gautam  | gautam@example.com    |
+      | Maloney | maloney@example.com   |
+      | Sophie  | sophie@example.com    |
+      | Neha    | neha@example.com      |
+
+    And the players all join the game
+
+    And the game will set team and player order as follows:
       | players | team  |
       | Neil    | 1     |
       | Winna   | 2     |
@@ -14,7 +27,8 @@ Feature: Play a sample game
       | Maloney | 1     |
       | Sophie  | 2     |
       | Neha    | 1     |
-    When I start a sample game
+
+    When Neil starts the game
     Then round 1 starts
 
     Then it should be Neil's turn

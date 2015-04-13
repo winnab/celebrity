@@ -1,8 +1,8 @@
 class InviteMailer
   def send_mail recipient, game_id
-    recipient = "test@example" # TODO add this back in for prod
+    recipient = recipient
     Pony.options = {
-      from: "test@example.com",
+      from: "game_people@example.com",
       via: :smtp,
       via_options: {
         address: "smtp.mandrillapp.com",
@@ -13,12 +13,11 @@ class InviteMailer
         authentication: "plain"
       }
     }
-
     Pony.mail(
-      to: recipient,
+      to: recipient || "test@example.com",
       from: Pony.options[:from],
-      subject: "Different files! Join my game #{game_id}!",
-      body: "Hey hey, this is a message!!"
+      subject: "Join my game!",
+      body: "Hey hey, this is a message!! Click here: localhost:3000/join/#{game_id}/#{recipient}"
     )
   end
 end

@@ -1,0 +1,30 @@
+.teams {
+  @include clearfix();
+  margin: 0;
+  padding: 0;
+}
+
+.team-details {
+  background: $blue-light-1;
+  float: left;
+  margin:0;
+  padding: 20px;
+  width: 49%;
+
+  li {
+    list-style: none;
+    padding: 10px;
+  }
+}
+
+.team-details:first-of-type {
+  margin-right: 2%;
+}
+
+.current-player {
+  background: $yellow-dark-1;
+}
+
+.current-team {
+  background: $yellow-light-1;
+}

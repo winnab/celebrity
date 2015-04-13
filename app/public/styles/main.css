@@ -109,10 +109,30 @@ section.container {
   section.container h6 {
     color: #37783A;
     font-family: "Playfair Display", Georgia, serif;
-    font-size: 20px;
     font-weight: 700;
-    line-height: 28px;
     margin: 20px 0 8px 0; }
+  section.container .teams {
+    margin: 0;
+    padding: 0; }
+    section.container .teams:after {
+      content: "";
+      display: table;
+      clear: both; }
+  section.container .team-details {
+    background: #C7E8F2;
+    float: left;
+    margin: 0;
+    padding: 20px;
+    width: 49%; }
+    section.container .team-details li {
+      list-style: none;
+      padding: 10px; }
+  section.container .team-details:first-of-type {
+    margin-right: 2%; }
+  section.container .current-player {
+    background: #EBC60F; }
+  section.container .current-team {
+    background: #F2E744; }
 
 /* separate files for region-specific styles */
 footer {

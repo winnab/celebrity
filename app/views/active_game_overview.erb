@@ -1,0 +1,31 @@
+<h1>Leaderboard</h1>
+
+<h2>Rounds</h2>
+<h2>Id: <%= @game.id %></h2>
+<h2>Current Round: <%= @game.current_round_count %></h2>
+<h3>Clues Reminaing: <%= @game.current_round.remaining_clues.count %></h3>
+<h3>Clues Completed: <%= @game.current_round.completed_clues.count %></h3>
+
+<div class="teams">
+  <% @game.teams.each do | team | %>
+    <% if team == @game.current_team %>
+      <div class="team-details current-team">
+    <% else %>
+      <div class="team-details">
+    <% end %>
+      <h2>Team <%= team.name %></h2>
+      <h2>Score <%= team.score %></h2>
+      <h4>Players</h4>
+      <% team.players.each_with_index do | player, i | %>
+        <% if team == @game.current_team && i == team.player_ix %>
+          <li class="current-player">
+            <%= player.name %>
+            <a href="play-turn">Start Turn!</a>
+          </li>
+        <% else %>
+          <li><%= player.name %></li>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

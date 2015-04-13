@@ -1,3 +1,4 @@
+require 'pry'
 require_relative "app/core/game"
 require_relative "app/core/invite"
 
@@ -16,6 +17,7 @@ class CelebrityApp < Sinatra::Base
     set :game_store, GameStore.new
     set :invite_store, InviteStore.new
     set :invite_mailer, InviteMailer.new
+    set :seed_data, JSON.parse(File.open(File.expand_path(File.join(File.dirname(__FILE__), "app/lib/scripts/seeds.json"))).read)
   end
 
   get "/" do
@@ -60,6 +62,10 @@ class CelebrityApp < Sinatra::Base
     {
       name: "friend_5",
       email: params["friend_5"]
+    },
+    {
+      name: "friend_6",
+      email: params["friend_6"]
     }]
 
     invite_recipients.each do | r |
@@ -68,6 +74,7 @@ class CelebrityApp < Sinatra::Base
         email: params["creator_email"]
       }, r, game.id)
       settings.invite_store.add(invite)
+      settings.invite_mailer.send_mail r[:email], game.id
     end
 
     redirect to("/game_overview/#{ game.id }")
@@ -79,6 +86,7 @@ class CelebrityApp < Sinatra::Base
     @player_names = game.players.map(&:name)
     @invited_names_and_emails = invites.map { | i | { name: i.recipient[:name], email: i.recipient[:email] } }
     @game_id = game.id
+    @status = game.players.length < 5 ? 'Waiting for players' : 'Ready to play!'
     erb :game_overview
   end
 
@@ -127,6 +135,23 @@ class CelebrityApp < Sinatra::Base
 
   get "/styleguide" do
     erb :styleguide
+  end
+
+  get "/sample-game" do
+    seeds = settings.seed_data.dup
+    creator = seeds[0];
+    @game = Game.new({
+      name: creator["name"],
+      clues: creator["clues"]
+    })
+    settings.game_store.add(@game)
+    @game.id = 123;
+    @game.start(seeds)
+    erb :active_game_overview
+  end
+
+  get "/play-turn" do
+    erb :play_turn
   end
 
   get "/styles/main.css" do

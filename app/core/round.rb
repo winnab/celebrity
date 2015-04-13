@@ -1,3 +1,5 @@
+require_relative './turn'
+
 class Round
   attr_accessor :remaining_clues, :completed_clues, :type
 

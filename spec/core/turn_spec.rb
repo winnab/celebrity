@@ -13,8 +13,8 @@ describe Turn do
   let(:players_obj) {
     players.map do | p |
       {
-        name: p,
-        clues: 5.times.each_with_object([]) { | i, obj | obj << "#{p}-clue-#{i}" }
+        "name" => p,
+        "clues" => 5.times.each_with_object([]) { | i, obj | obj << "#{p}-clue-#{i}" }
       }
     end
    }

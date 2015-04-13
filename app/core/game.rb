@@ -1,32 +1,37 @@
 require_relative './player'
+require_relative './team'
+require_relative './round'
 
 class Game
-  attr_accessor :players, :num_teams, :teams, :clues, :current_player_ix, :current_team, :current_round, :lineup
-  attr_reader :id
+  attr_accessor :players, :num_teams, :teams, :clues, :current_player_ix, :current_team, :current_round, :lineup, :id
+  attr_reader :id, :current_round_count
 
   MIN_NUM_PLAYERS = 6
 
   def initialize creator
     create_players [creator]
     @id = SecureRandom.uuid
+    @rounds = []
   end
 
   def start players, num_teams = 2
     @num_teams = num_teams
     @current_player_ix = 0
     @current_team = nil
-    create_players players # change constructor
+    @players = create_players players
     @clues = collect_clues
     @teams = create_teams num_teams
-    @current_round = start_round
+    start_round
+    @current_round = current_round
+    @current_round_count = @rounds.count
     self
   end
 
   def create_players players
-    @players = @players || []
-    players.each { | p | @players << Player.new(p[:name], p[:clues]) }
-    @players.shuffle!
-    @players
+    player_list = []
+    players.each { | p | player_list << Player.new(p["name"], p["clues"]) }
+    player_list.shuffle!
+    player_list
   end
 
   def collect_clues
@@ -92,13 +97,23 @@ class Game
   end
 
   def current_team
+    @teams.first
   end
 
   def get_next_player
 
   end
 
+  def current_round
+    @rounds[@rounds.count - 1]
+  end
+
+  def new_turn
+    round = current_round
+    @turn = round.new_turn
+  end
+
   def start_round
-    Round.new(@current_player_ix, @teams, @clues.dup, @game)
+    @rounds << Round.new(@current_player_ix, @teams, @clues.dup, @game)
   end
 end

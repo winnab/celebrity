@@ -16,11 +16,11 @@ When(/^I input my email address$/) do
   page.fill_in("Your Email", with: "recipient@email.com")
 end
 
-When(/^I input (\d+) clues$/) do | num_clues |
-  num_clues.to_i.times do | i |
-    page.fill_in("Clue #{ i + 1 }", with: "Person Clue #{ i + 1 }")
-  end
-end
+# When(/^I input (\d+) clues$/) do | num_clues |
+#   num_clues.to_i.times do | i |
+#     page.fill_in("Clue #{ i + 1 }", with: "Person Clue #{ i + 1 }")
+#   end
+# end
 
 When(/^I click the Join Game button$/) do
   click_button "Join Game!"

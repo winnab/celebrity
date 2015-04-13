@@ -8,6 +8,7 @@ Bundler.require()
 
 require "./celebrity_app"
 require "rack/test"
+require "pry"
 
 module RSpecMixin
   include Rack::Test::Methods
