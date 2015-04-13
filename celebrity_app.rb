@@ -1,4 +1,3 @@
-require 'pry'
 require_relative "app/core/game"
 require_relative "app/core/invite"
 
@@ -17,8 +16,15 @@ class CelebrityApp < Sinatra::Base
     set :game_store, GameStore.new
     set :invite_store, InviteStore.new
     set :invite_mailer, InviteMailer.new
+  end
+
+  configure :development do
+    use BetterErrors::Middleware
+    BetterErrors.application_root = File.dirname(__FILE__)
+
     set :seed_data, JSON.parse(File.open(File.expand_path(File.join(File.dirname(__FILE__), "app/lib/scripts/seeds.json"))).read)
   end
+
 
   get "/" do
     erb :create_game
