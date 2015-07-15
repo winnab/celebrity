@@ -3,6 +3,8 @@ require_relative "app/core/invite"
 
 require_relative "app/services/game_store"
 require_relative "app/services/invite_store"
+require_relative "app/services/player_store"
+
 require_relative "app/services/invite_mailer"
 
 class CelebrityApp < Sinatra::Base
@@ -15,6 +17,7 @@ class CelebrityApp < Sinatra::Base
     set :session_secret, ENV["SESSION_KEY"]
     set :game_store, GameStore.new
     set :invite_store, InviteStore.new
+    set :player_store, PlayerStore.new
     set :invite_mailer, InviteMailer.new
   end
 
@@ -36,17 +39,20 @@ class CelebrityApp < Sinatra::Base
   end
 
   post "/game_overview" do
+    clues = [
+      params["clue_1"],
+      params["clue_2"],
+      params["clue_3"],
+      params["clue_4"],
+      params["clue_5"]
+    ]
+
     game = Game.new({
       name: params["creator_name"],
-      clues: [
-        params["clue_1"],
-        params["clue_2"],
-        params["clue_3"],
-        params["clue_4"],
-        params["clue_5"]
-      ]
+      clues: clues
     })
 
+    settings.player_store.add(Player.new(game.id, params["creator_name"], clues))
     settings.game_store.add(game)
 
     invite_recipients = [{
@@ -79,7 +85,12 @@ class CelebrityApp < Sinatra::Base
         name: params["creator_name"],
         email: params["creator_email"]
       }, r, game.id)
+
+      player = Player.new(game.id, r[:name])
+
       settings.invite_store.add(invite)
+      settings.player_store.add(player)
+
       settings.invite_mailer.send_mail r[:email], game.id
     end
 
@@ -88,11 +99,14 @@ class CelebrityApp < Sinatra::Base
 
   get "/game_overview/:game_id" do
     game = settings.game_store.find(params["game_id"])
-    invites = settings.invite_store.find_all_by_game_id(params["game_id"])
-    @player_names = game.players.map(&:name)
-    @invited_names_and_emails = invites.map { | i | { name: i.recipient[:name], email: i.recipient[:email] } }
     @game_id = game.id
-    @status = game.players.length < 5 ? 'Waiting for players' : 'Ready to play!'
+
+    invites = settings.invite_store.find_all_by_game_id(game.id)
+    @invited_names_and_emails = invites.map { | i | { name: i.recipient[:name], email: i.recipient[:email] } }
+
+    @players = settings.player_store.find_all_by_game_id(game.id)
+    @status = @players.length < 5 ? 'Waiting for players' : 'Ready to play!'
+
     erb :game_overview
   end
 

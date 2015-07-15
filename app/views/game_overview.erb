@@ -1,11 +1,11 @@
 <h2>Game Details</h2>
 <div class="status">Status: <%= @status %></div>
-<% if @player_names.size > 0 %>
+<% if @players.size > 0 %>
   <p>Welcome! Here is everyone who has been invited to the game so far.</p>
   <h4>Players</h4>
   <ul class="joined-players">
-    <% @player_names.each do | player | %>
-        <li><%= player %></li>
+    <% @players.each do | player | %>
+        <li><%= player.name %></li>
     <% end %>
   </ul>
 

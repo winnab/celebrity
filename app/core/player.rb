@@ -1,6 +1,7 @@
 class Player
-  attr_accessor :name, :clues, :team
-  def initialize name, clues = [], team = nil
+  attr_accessor :game_id, :name, :clues, :team
+  def initialize game_id, name, clues = [], team = nil
+    @game_id = game_id
     @name = name
     @clues = clues
     @team = team
