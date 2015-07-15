@@ -6,9 +6,6 @@ gem "sinatra"
 # assets
 gem "sass"
 
-#email
-gem "pony"
-
 # server
 gem "rack", "1.4.1"
 
@@ -18,6 +15,7 @@ group :test, :development do
   gem "byebug"
   gem "capybara"
   gem "cucumber"
+  gem "foreman"
   gem "pry"
   gem "pry-byebug"
   gem "rerun"

@@ -34,6 +34,16 @@ section.container {
     margin: 8px 0;
   }
 
+  a {
+    background-color: $green-dark-1;
+    color: $almost-white;
+    display: inline-block;
+    margin: 10px 0;
+    padding: 12px;
+    padding-top: 10px;
+    text-decoration: none;
+  }
+
   /* separate files for element-specific styles */
   @import 'includes/articles';
   @import 'includes/forms';

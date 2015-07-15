@@ -1,11 +1,7 @@
 require_relative "app/core/game"
-require_relative "app/core/invite"
 
 require_relative "app/services/game_store"
-require_relative "app/services/invite_store"
 require_relative "app/services/player_store"
-
-require_relative "app/services/invite_mailer"
 
 class CelebrityApp < Sinatra::Base
   enable :sessions
@@ -16,9 +12,7 @@ class CelebrityApp < Sinatra::Base
     set :public_dir, settings.root + "/app/public"
     set :session_secret, ENV["SESSION_KEY"]
     set :game_store, GameStore.new
-    set :invite_store, InviteStore.new
     set :player_store, PlayerStore.new
-    set :invite_mailer, InviteMailer.new
   end
 
   configure :development do
@@ -48,51 +42,12 @@ class CelebrityApp < Sinatra::Base
     ]
 
     game = Game.new({
-      name: params["creator_name"],
+      name: params["player_name"],
       clues: clues
     })
 
-    settings.player_store.add(Player.new(game.id, params["creator_name"], clues))
+    settings.player_store.add(Player.new(game.id, params["player_name"], clues))
     settings.game_store.add(game)
-
-    invite_recipients = [{
-      name: "friend_1",
-      email: params["friend_1"]
-    },
-    {
-      name: "friend_2",
-      email: params["friend_2"]
-    },
-    {
-      name: "friend_3",
-      email: params["friend_3"]
-    },
-    {
-      name: "friend_4",
-      email: params["friend_4"]
-    },
-    {
-      name: "friend_5",
-      email: params["friend_5"]
-    },
-    {
-      name: "friend_6",
-      email: params["friend_6"]
-    }]
-
-    invite_recipients.each do | r |
-      invite = Invite.new({
-        name: params["creator_name"],
-        email: params["creator_email"]
-      }, r, game.id)
-
-      player = Player.new(game.id, r[:name])
-
-      settings.invite_store.add(invite)
-      settings.player_store.add(player)
-
-      settings.invite_mailer.send_mail r[:email], game.id
-    end
 
     redirect to("/game_overview/#{ game.id }")
   end
@@ -101,8 +56,7 @@ class CelebrityApp < Sinatra::Base
     game = settings.game_store.find(params["game_id"])
     @game_id = game.id
 
-    invites = settings.invite_store.find_all_by_game_id(game.id)
-    @invited_names_and_emails = invites.map { | i | { name: i.recipient[:name], email: i.recipient[:email] } }
+    @game_join_url = "/join/#{game.id}"
 
     @players = settings.player_store.find_all_by_game_id(game.id)
     @status = @players.length < 5 ? 'Waiting for players' : 'Ready to play!'
@@ -114,34 +68,16 @@ class CelebrityApp < Sinatra::Base
     erb :how_to_play
   end
 
-  post "/invite/:game_id" do
+  get "/join/:game_id" do
     game = settings.game_store.find(params["game_id"])
-
-    new_invite = Invite.new({
-        name: params[:sender_name],
-        email: params[:sender_email]
-      }, {
-        name: params[:invite_name],
-        email: params[:invite_email]
-      },
-      game.id
-    )
-    settings.invite_store.add(new_invite)
-
-    settings.invite_mailer.send_mail params["invite_email"], game.id
-    redirect to("/game_overview/#{game.id}")
-  end
-
-  get "/join/:game_id/:email" do
-    game = settings.game_store.find(params["game_id"])
+    @creator_name = settings.player_store.find_all_by_game_id(game.id).first.name
     erb :join
   end
 
-  post "/join/:game_id/:email" do
+  post "/join/:game_id" do
     game = settings.game_store.find(params[:game_id])
-    invite = settings.invite_store.find_by_email_and_game_id(params[:email], params[:game_id]).first
     game.create_players([{
-      name: invite.recipient[:name],
+      name: params["player_name"],
       clues: [
         params["clue_1"],
         params["clue_2"],
@@ -150,6 +86,7 @@ class CelebrityApp < Sinatra::Base
         params["clue_5"]
       ]
     }])
+
     redirect to("/game_overview/#{game.id}")
   end
 

@@ -1,76 +1,10 @@
 <h2>Game Details</h2>
 <div class="status">Status: <%= @status %></div>
-<% if @players.size > 0 %>
-  <p>Welcome! Here is everyone who has been invited to the game so far.</p>
-  <h4>Players</h4>
-  <ul class="joined-players">
-    <% @players.each do | player | %>
-        <li><%= player.name %></li>
-    <% end %>
-  </ul>
-
-  <h4>Pending invitations</h4>
-  <ul class="invite-recipients">
-    <% @invited_names_and_emails.each do | invite | %>
-        <li><%= invite[:name] %>, <%= invite[:email] %> <em>invited</em></li>
-    <% end %>
-  </ul>
-<% else %>
-  <p><em>No players have been added to this game.</em></p>
-<% end %>
-
-<h4>Invite players<h4>
-
-<form
-  method="post"
-  accept-charset="utf-8"
-  action="/invite/<%= @game_id %>"
->
-  <fieldset>
-    <label
-      for="sender_name"
-    >
-      Your name
-    </label>
-    <input
-      type="text"
-      name="sender_name"
-      placeholder="test@example.com"
-    >
-
-    <label
-      for="sender_email"
-    >
-      Your email address
-    </label>
-    <input
-      type="text"
-      name="sender_email"
-      placeholder="test@example.com"
-    >
-  </fieldset>
-  <fieldset>
-    <label
-      for="invite_name"
-    >
-      Player name
-    </label>
-    <input
-      type="text"
-      name="invite_name"
-      placeholder="test@example.com"
-    >
-
-    <label
-      for="invite_email"
-    >
-      Player email address
-    </label>
-    <input
-      type="text"
-      name="invite_email"
-      placeholder="test@example.com"
-    >
-  </fieldset>
-  <button type="submit">Invite Player</button>
-</form>
+<p>Welcome! Here is everyone who has been invited to the game so far.</p>
+<h4>Players</h4>
+<ul class="joined-players">
+  <% @players.each do | player | %>
+      <li><%= player.name %></li>
+  <% end %>
+</ul>
+<a href=<%= @game_join_url %>>Click to join!</a>
