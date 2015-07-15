@@ -6,11 +6,11 @@ And(/^I enter my email address$/) do
   page.fill_in("sender_email", with: "hob@example.com")
 end
 
-Given(/^I enter the recipients's name$/) do
+Given(/^I enter the recipient's name$/) do
   page.fill_in("invite_name", with: "Lob")
 end
 
-Given(/^I enter the recipients's email address$/) do
+Given(/^I enter the recipient's email address$/) do
   page.fill_in("invite_email", with: "lob@example.com")
 end
 
@@ -25,10 +25,9 @@ end
 
 Then(/^The recipient is listed as invited$/) do
   expect(page.find(".invite-recipients")).to have_content "lob@example.com"
-  pending # expect(page.find("ul")).to have_content "not joined"
 end
 
-Then(/^The recipient recieves an email$/) do
+Then(/^The recipient receives an email$/) do
   pending # expect(Pony).to have_received(:mail).with(to: "lob@example.com")
 end
 

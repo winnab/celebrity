@@ -5,9 +5,9 @@ Feature: Invite Players
   Scenario: Inviting a player
     Given I enter my name
     And   I enter my email address
-    And   I enter the recipients's name
-    And   I enter the recipients's email address
+    And   I enter the recipient's name
+    And   I enter the recipient's email address
     When  I click the Invite Player button
     Then  I see the recipient's email in the list
     And   The recipient is listed as invited
-    And   The recipient recieves an email
+    And   The recipient receives an email
