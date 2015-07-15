@@ -1,0 +1,50 @@
+[{
+  "gameId": "12345",
+  "currentRound": "1",
+  "currentPlayer": "Neil",
+  "teams": [
+    [
+      "Neil",
+      "Winna",
+      "Divya"
+    ],
+    [
+      "Gautam",
+      "Maloney",
+      "Sophie"
+    ]
+  ],
+  "remainingClues": [
+   "Johnny Cash",
+   "Elvis",
+   "Dolly Parton",
+   "The Beatles",
+   "Hank Williams",
+   "Queen",
+   "Erasure",
+   "Squeeze",
+   "The Cure",
+   "George Michael",
+   "Zadie Smith",
+   "Michael Ondaatje",
+   "Aravind Adiga",
+   "J.M. Coetzee",
+   "Maya Angelou",
+   "Jonah Hill",
+   "Seth Rogan",
+   "Michael Cera",
+   "Emma Stone",
+   "James Franco",
+   "Jennifer Lawrence",
+   "James McAvoy",
+   "Michael Fassbender",
+   "Nicholas Hoult",
+   "Ellen Page",
+   "Elizabeth Banks",
+   "Will Arnett",
+   "Chris Pratt",
+   "Cobie Smulders",
+   "Shaquille ONeal"
+  ],
+  "completedClues": []
+}]
