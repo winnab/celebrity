@@ -22,10 +22,8 @@ describe Game do
     end
 
     player_names.each do | name |
-      5.times.each_with_object([]) do | i, obj |
-        clues = obj << "#{name}-clue-#{i}"
-        game_store.add_clues_to_game(@game.id, clues)
-      end
+      clues = 5.times.map { | num | "#{name}-clue-#{num + 1}" }
+      game_store.add_clues_to_game(@game.id, clues)
     end
 
     @game.start(player_store.find_all_by_game_id(@game.id), num_teams)
