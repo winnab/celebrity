@@ -1,18 +1,41 @@
+Before do
+  clues = [ "clue_1", "clue_2", "clue_3", "clue_4", "clue_5" ]
+
+  game = Game.new({
+    name: "Winna",
+    clues: clues
+  })
+
+  creator = Player.new(game.id, "Winna", clues)
+
+  Capybara.app.settings.player_store.add(creator)
+  Capybara.app.settings.game_store.add(game)
+
+  @game = Capybara.app.settings.game_store.list.last
+end
+
 Given(/^A game has been created$/) do
-  pending # express the regexp above with the code you wish you had
+  expect(Capybara.app.settings.game_store.list).to include(@game)
 end
 
 Given(/^I have been invited to the game$/) do
-  game_id = Capybara.app.settings.game_store.list.last.id
+  game_id = @game.id
   visit "/join/#{game_id}"
 end
 
 Given(/^I am on the Join the Game page$/) do
-  game_id = Capybara.app.settings.game_store.list.last.id
+  game_id = @game.id
   visit "/join/#{game_id}"
 end
 
 When(/^I click the Join Game button$/) do
+  fill_in("player_name", :with => "Bob")
+  fill_in("clue_1", :with => "bob_clue_1")
+  fill_in("clue_2", :with => "bob_clue_2")
+  fill_in("clue_3", :with => "bob_clue_3")
+  fill_in("clue_4", :with => "bob_clue_4")
+  fill_in("clue_5", :with => "bob_clue_5")
+
   click_button "Join Game!"
 end
 

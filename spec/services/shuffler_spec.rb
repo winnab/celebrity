@@ -4,9 +4,9 @@ require_relative "../../app/services/shuffler"
 
 describe Shuffler do
   it "#shuffle_players" do
-    alice = Player.new('Alice')
-    bob = Player.new('Bob')
-    carol = Player.new('Carol')
+    alice = Player.new(1, 'Alice', [])
+    bob = Player.new(1, 'Bob', [])
+    carol = Player.new(1, 'Carol', [])
     players = [alice, bob, carol]
 
     shuffled_players = subject.shuffle_players(players)

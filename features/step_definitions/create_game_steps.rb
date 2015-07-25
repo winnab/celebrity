@@ -3,7 +3,7 @@ Given(/^I am on the homepage$/) do
   click_link "// Clear Session"
 end
 
-When(/^I input my name as the game creator$/) do
+When(/^I input my name$/) do
   fill_in("player_name", :with => "Winna")
 end
 

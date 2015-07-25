@@ -29,7 +29,11 @@ class Game
 
   def create_players players
     player_list = []
-    players.each { | p | player_list << Player.new(p["name"], p["clues"]) }
+    players.each { | p | player_list << Player.new(
+      self.id,
+      p["name"],
+      p["clues"]
+    ) }
     player_list.shuffle!
     player_list
   end

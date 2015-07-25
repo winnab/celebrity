@@ -76,16 +76,17 @@ class CelebrityApp < Sinatra::Base
 
   post "/join/:game_id" do
     game = settings.game_store.find(params[:game_id])
-    game.create_players([{
-      name: params["player_name"],
-      clues: [
+    settings.player_store.add(Player.new(
+      game.id,
+      params["player_name"],
+      [
         params["clue_1"],
         params["clue_2"],
         params["clue_3"],
         params["clue_4"],
         params["clue_5"]
       ]
-    }])
+    ))
 
     redirect to("/game_overview/#{game.id}")
   end
