@@ -2,8 +2,6 @@ ENV["RACK_ENV"] ||= "development"
 
 require "rubygems"
 require "bundler"
-require "better_errors"
-require "pry"
 
 Bundler.require()
 
