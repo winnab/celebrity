@@ -6,27 +6,29 @@ require_relative "../../app/core/turn"
 require "spec_helper"
 
 describe Turn do
-  let(:players) {
-    ["winna", "neil", "chucky", "jessica", "richa", "deb", "divya", "gautam"]
-  }
+  before do
+    game_store = GameStore.new
+    game_store.add(Game.new)
+    @game = game_store.list.last
+    num_teams = 2
 
-  let(:players_obj) {
-    players.map do | p |
-      {
-        "name" => p,
-        "clues" => 5.times.each_with_object([]) { | i, obj | obj << "#{p}-clue-#{i}" }
-      }
+    player_store = PlayerStore.new
+    player_names = ["winna", "neil", "chucky", "jessica", "richa", "deb", "divya", "gautam"]
+
+    player_names.each do |name|
+      player_store.add(Player.new(@game.id, name))
     end
-   }
 
-  let(:num_teams) { 2 }
+    player_names.each do | name |
+      clues = 5.times.map { | num | "#{name}-clue-#{num + 1}" }
+      game_store.add_clues_to_game(@game.id, clues)
+    end
 
-  let(:game) { Game.new(players_obj.first).start(players_obj, num_teams) }
-
-  let(:round) { game.current_round }
+    @game.start(player_store.find_all_by_game_id(@game.id), num_teams)
+  end
 
   context "active turn" do
-    let(:turn) { round.new_turn }
+    let(:turn) { @game.current_round.new_turn }
 
     describe "#initialize" do
       it "creates a timer that is running" do
