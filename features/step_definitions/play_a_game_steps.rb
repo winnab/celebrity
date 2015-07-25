@@ -5,50 +5,47 @@ Before do
   @game_id = nil
 end
 
-Given(/^(.*?) has created a game$/) do | game_creator_name |
-  @game_creator_name = game_creator_name
-end
+Given(/^(.*?) has created a game with clues$/) do | game_creator_name |
+  @creator = game_creator_name.gsub("\"", "")
+  clues = Clues.new.creator_clues
 
-Given(/^his email address is "(.*?)"$/) do | game_creator_email |
-  @game_creator_email = game_creator_email
-end
-
-Given(/^he invited players to the game$/) do |table|
   visit "/"
-  fill_in("creator_name", :with => @game_creator_name)
-  fill_in("creator_email", :with => @game_creator_email)
 
-  @potential_clues.random.each_with_index do |clue, i|
-    fill_in("clue_#{i + 1}", :with => clue)
-  end
-
-  table.hashes.each_with_index do | player, i |
-    fill_in("friend_#{i + 1}", :with => player[:email])
-  end
-
-  allow(Pony).to receive(:mail) do |arg|
-    @mails << arg
-  end
+  fill_in("player_name", :with => @creator)
+  fill_in("clue_1", :with => "#{clues[0]}")
+  fill_in("clue_2", :with => "#{clues[1]}")
+  fill_in("clue_3", :with => "#{clues[2]}")
+  fill_in("clue_4", :with => "#{clues[3]}")
+  fill_in("clue_5", :with => "#{clues[4]}")
 
   click_button "Create Game"
-  expect(@mails.length).to eql(table.hashes.length)
-  @game_id = page.current_path.split('/').last
-  expect(page.current_path).to start_with("/game_overview/")
-  expect(page.find('.status').text).to eql('Status: Waiting for players')
+
+  @game = Capybara.app.settings.game_store.list.last
+
+  expect(page.find(".joined-players")).to have_content "Star-Lord"
+
 end
 
-Given(/^the players all join the game$/) do
-  @mails.each do |mail|
-    visit "/join/#{@game_id}/#{mail[:to]}"
-    @potential_clues.random.each_with_index do |clue, i|
-        fill_in("clue_#{i + 1}", :with => clue)
-    end
-    click_button "Join Game!"
-    expect(page).to have_content "Game Details"
-    expect(page).to have_content mail[:to]
-  end
+Given(/^"(.*?)" have joined the game$/) do |friends|
+  friend_list = friends.split(", ")
+  friend_list[4].gsub!("and ", "")
+  clues = Clues.new.joined_players_clues
 
-  expect(page.find('.status').text).to eql('Status: Ready to play!')
+  friend_list.each do | friend |
+    game_id = @game.id
+    visit "/join/#{game_id}"
+
+    fill_in("player_name", :with => friend)
+    fill_in("clue_1", :with => clues[0])
+    fill_in("clue_2", :with => clues[1])
+    fill_in("clue_3", :with => clues[2])
+    fill_in("clue_4", :with => clues[3])
+    fill_in("clue_5", :with => clues[4])
+
+    click_button "Join Game!"
+    clues.shift(5)
+    expect(page).to have_content friend
+  end
 end
 
 Given(/^the game will set team and player order as follows:$/) do |table|

@@ -9,6 +9,14 @@ class Clues
     return random_clues
   end
 
+  def creator_clues
+    @clues[0...5]
+  end
+
+  def joined_players_clues
+    @clues[5...@clues.length]
+  end
+
   private
 
   CLUES = [
