@@ -13,6 +13,7 @@ class CelebrityApp < Sinatra::Base
     set :session_secret, ENV["SESSION_KEY"]
     set :game_store, GameStore.new
     set :player_store, PlayerStore.new
+    set :min_num_players, 6
   end
 
   configure :development do
@@ -22,17 +23,12 @@ class CelebrityApp < Sinatra::Base
     set :seed_data, JSON.parse(File.open(File.expand_path(File.join(File.dirname(__FILE__), "app/lib/scripts/seeds.json"))).read)
   end
 
-
   get "/" do
     erb :create_game
   end
 
-  get "/clear" do
-    session.clear
-    redirect to("/")
-  end
-
   post "/game_overview" do
+    game = Game.new
     clues = [
       params["clue_1"],
       params["clue_2"],
@@ -41,54 +37,59 @@ class CelebrityApp < Sinatra::Base
       params["clue_5"]
     ]
 
-    game = Game.new({
-      name: params["player_name"],
-      clues: clues
-    })
-
     settings.player_store.add(Player.new(game.id, params["player_name"], clues))
     settings.game_store.add(game)
-
+    settings.game_store.add_clues_to_game(game.id, clues)
     redirect to("/game_overview/#{ game.id }")
   end
 
   get "/game_overview/:game_id" do
-    game = settings.game_store.find(params["game_id"])
-    @game_id = game.id
+    @game_id = params["game_id"]
+    @players = settings.player_store.find_all_by_game_id(@game_id)
 
-    @game_join_url = "/join/#{game.id}"
-
-    @players = settings.player_store.find_all_by_game_id(game.id)
-    @status = @players.length < 5 ? 'Waiting for players' : 'Ready to play!'
+    @min_num_players = settings.min_num_players
+    @join_game_url = "/join/#{@game_id}"
+    @start_game_url = "/#{@game_id}/start"
 
     erb :game_overview
   end
 
-  get "/how_to_play" do
-    erb :how_to_play
+  get "/:game_id/start" do
+    game_id = params["game_id"]
+    players = settings.player_store.find_all_by_game_id(game_id)
+    @game = settings.game_store.find(game_id)
+    @game.start(players)
+    erb :game_dashboard
   end
 
   get "/join/:game_id" do
-    game = settings.game_store.find(params["game_id"])
-    @creator_name = settings.player_store.find_all_by_game_id(game.id).first.name
     erb :join
   end
 
   post "/join/:game_id" do
     game = settings.game_store.find(params[:game_id])
     settings.player_store.add(Player.new(
-      game.id,
+      params[:game_id],
       params["player_name"],
-      [
-        params["clue_1"],
-        params["clue_2"],
-        params["clue_3"],
-        params["clue_4"],
-        params["clue_5"]
-      ]
     ))
+    settings.game_store.add_clues_to_game(game.id, [
+      params["clue_1"],
+      params["clue_2"],
+      params["clue_3"],
+      params["clue_4"],
+      params["clue_5"]
+    ])
 
-    redirect to("/game_overview/#{game.id}")
+    redirect to("/game_overview/#{params[:game_id]}")
+  end
+
+  get "/clear" do
+    session.clear
+    redirect to("/")
+  end
+
+  get "/how_to_play" do
+    erb :how_to_play
   end
 
   get "/styleguide" do
@@ -96,16 +97,7 @@ class CelebrityApp < Sinatra::Base
   end
 
   get "/sample-game" do
-    seeds = settings.seed_data.dup
-    creator = seeds[0];
-    @game = Game.new({
-      name: creator["name"],
-      clues: creator["clues"]
-    })
-    settings.game_store.add(@game)
-    @game.id = 123;
-    @game.start(seeds)
-    erb :active_game_overview
+
   end
 
   get "/play-turn" do

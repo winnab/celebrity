@@ -7,39 +7,31 @@ class Game
   attr_reader :id, :current_round_count
 
   MIN_NUM_PLAYERS = 6
+  CLUES_PER_PLAYER = 5
 
-  def initialize creator
-    create_players [creator]
+  def initialize
     @id = SecureRandom.uuid
     @rounds = []
+    @clues = []
   end
 
   def start players, num_teams = 2
-    @num_teams = num_teams
     @current_player_ix = 0
     @current_team = nil
     @players = create_players players
-    @clues = collect_clues
     @teams = create_teams num_teams
-    start_round
+    start_round if can_start? # TODO fail gracefully
     @current_round = current_round
     @current_round_count = @rounds.count
     self
   end
 
   def create_players players
-    player_list = []
-    players.each { | p | player_list << Player.new(
-      self.id,
-      p["name"],
-      p["clues"]
-    ) }
-    player_list.shuffle!
-    player_list
+    players.shuffle!
   end
 
-  def collect_clues
-    @players.flat_map { | p | p.clues }
+  def add_clues clues
+    @clues.concat(clues)
   end
 
   def create_teams num_teams
@@ -48,37 +40,12 @@ class Game
     @players.each_slice(players_per_team) do | group |
       players_by_team << group
     end
-    @teams = []
+    teams = []
     num_teams.times do | i |
       players_by_team[i].each { | p | p.team = i }
-      teams << Team.new(i, players_by_team[i])
+      teams << Team.new("Team #{i}!", players_by_team[i])
     end
     teams
-  end
-
-  def can_start?
-    has_teams? && has_players? && has_clues? && sufficient_players? && sufficient_clues?
-  end
-
-  def has_teams?
-    @teams.length >= 2
-  end
-
-  def has_players?
-    @players.all? { | p | p.name }
-  end
-
-  def has_clues?
-    @players.all? { | p | p.clues }
-  end
-
-  def sufficient_players?
-    @players.length >= MIN_NUM_PLAYERS
-  end
-
-  def sufficient_clues?
-    total = @players.reduce(0) { | ret, p | ret += p.clues.length }
-    total >= ( @players.length * 4 )
   end
 
   def current_player
@@ -104,10 +71,6 @@ class Game
     @teams.first
   end
 
-  def get_next_player
-
-  end
-
   def current_round
     @rounds[@rounds.count - 1]
   end
@@ -119,5 +82,29 @@ class Game
 
   def start_round
     @rounds << Round.new(@current_player_ix, @teams, @clues.dup, @game)
+  end
+
+  def can_start?
+    has_teams? && has_players? && has_clues? && sufficient_players? && sufficient_clues?
+  end
+
+  def has_teams?
+    @teams.length >= 2
+  end
+
+  def has_players?
+    @players.all? { | p | p.name }
+  end
+
+  def has_clues?
+    @clues.any?
+  end
+
+  def sufficient_players?
+    @players.length >= MIN_NUM_PLAYERS
+  end
+
+  def sufficient_clues?
+    @clues.length >= @players.length * CLUES_PER_PLAYER
   end
 end

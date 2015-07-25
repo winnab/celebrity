@@ -12,18 +12,17 @@ Given(/^(.*?) has created a game with clues$/) do | game_creator_name |
   visit "/"
 
   fill_in("player_name", :with => @creator)
-  fill_in("clue_1", :with => "#{clues[0]}")
-  fill_in("clue_2", :with => "#{clues[1]}")
-  fill_in("clue_3", :with => "#{clues[2]}")
-  fill_in("clue_4", :with => "#{clues[3]}")
-  fill_in("clue_5", :with => "#{clues[4]}")
+  fill_in("clue_1", :with => clues[0])
+  fill_in("clue_2", :with => clues[1])
+  fill_in("clue_3", :with => clues[2])
+  fill_in("clue_4", :with => clues[3])
+  fill_in("clue_5", :with => clues[4])
 
   click_button "Create Game"
 
   @game = Capybara.app.settings.game_store.list.last
 
   expect(page.find(".joined-players")).to have_content "Star-Lord"
-
 end
 
 Given(/^"(.*?)" have joined the game$/) do |friends|
@@ -48,47 +47,22 @@ Given(/^"(.*?)" have joined the game$/) do |friends|
   end
 end
 
-Given(/^the game will set team and player order as follows:$/) do |table|
-  pending # express the regexp above with the code you wish you had
+When(/^the game is started$/) do
+  game_id = @game.id
+  visit "/game_overview/#{game_id}"
+  click_link "Start Game"
 end
 
-When(/^(.*?) starts the game$/) do |game_creator|
-  pending # express the regexp above with the code you wish you had
+Then(/^the team names are listed$/) do
+  @game.teams.each do |team|
+    expect(page).to have_content team.name
+  end
 end
 
-Then(/^round (\d+) starts$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
-end
-
-Then(/^it should be Neil's turn$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-When(/^(\d+) clues are guessed$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
-end
-
-Then(/^the scores should be:$/) do |table|
-  # table is a Cucumber::Ast::Table
-  pending # express the regexp above with the code you wish you had
-end
-
-Then(/^it should be Winna's turn$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-When(/^(\d+) clues are guessed and (\d+) are skipped$/) do |arg1, arg2|
-  pending # express the regexp above with the code you wish you had
-end
-
-Then(/^it should be Divya's turn$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-Then(/^it should be Gautam's turn$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-Then(/^the round is over$/) do
-  pending # express the regexp above with the code you wish you had
+Then(/^there is a list of players for each team$/) do
+  @game.teams.each do |team|
+    team.players.each do |player|
+      expect(page).to have_content player.name
+    end
+  end
 end

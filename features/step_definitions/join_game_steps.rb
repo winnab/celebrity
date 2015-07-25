@@ -1,11 +1,6 @@
 Before do
-  clues = [ "clue_1", "clue_2", "clue_3", "clue_4", "clue_5" ]
-
-  game = Game.new({
-    name: "Winna",
-    clues: clues
-  })
-
+  game = Game.new
+  clues = Clues.new.creator_clues
   creator = Player.new(game.id, "Winna", clues)
 
   Capybara.app.settings.player_store.add(creator)

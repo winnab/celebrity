@@ -19,6 +19,11 @@ class GameStore
     store.find { |game| game.id == game_id }
   end
 
+  def add_clues_to_game game_id, clues
+    game = store.find { |game| game.id == game_id }
+    game.add_clues(clues)
+  end
+
   private
 
   attr_accessor :store

@@ -7,4 +7,7 @@
       <li><%= player.name %></li>
   <% end %>
 </ul>
-<a href=<%= @game_join_url %>>Click to join!</a>
+<a href=<%= @join_game_url %>>Click to join!</a>
+<% if @players.length >= @min_num_players %>
+  <a href=<%= @start_game_url %>>Start Game</a>
+<% end %>
