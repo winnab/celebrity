@@ -43,27 +43,3 @@ $ sass --watch app/lib/styles/main.scss:app/public/styles/main.css
 ####  Heroku Debugging
 * Log: `heroku logs`
 * Get console: `heroku run`
-
-## Structure
-```
-- app
-    -- core: models/controllers
-    -- lib
-        -- styles: scss
-    -- public
-        -- images
-        -- styles: compiled css
-    -- routes
-        -- routes_map
-        -- routes_definitions
-    -- services
-        -- invite_mailer
-    -- views: erb
-
-
-- features: cucumber feature tests
-  -- step_definitions
-  -- support 
-
-- spec: rspec unit tests 
-```
