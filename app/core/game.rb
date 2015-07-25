@@ -85,7 +85,7 @@ class Game
   end
 
   def can_start?
-    has_teams? && has_players? && has_clues? && sufficient_players? && sufficient_clues?
+    has_teams? && has_players? && has_clues? && sufficient_players? && sufficient_clues? # TODO throw specific errors
   end
 
   def has_teams?
