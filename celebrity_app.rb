@@ -27,7 +27,7 @@ class CelebrityApp < Sinatra::Base
     erb :create_game
   end
 
-  post "/game_overview" do
+  post "/new-game" do
     game = Game.new
     clues = [
       params["clue_1"],
@@ -40,36 +40,28 @@ class CelebrityApp < Sinatra::Base
     settings.player_store.add(Player.new(game.id, params["player_name"], clues))
     settings.game_store.add(game)
     settings.game_store.add_clues_to_game(game.id, clues)
-    redirect to("/game_overview/#{ game.id }")
+    redirect to("games/#{game.id}/dashboard")
   end
 
-  get "/game_overview/:game_id" do
+  get "/games/:game_id/dashboard" do
     @game_id = params["game_id"]
     @players = settings.player_store.find_all_by_game_id(@game_id)
 
     @min_num_players = settings.min_num_players
-    @join_game_url = "/join/#{@game_id}"
-    @start_game_url = "/#{@game_id}/start"
+    @join_game_url = "/games/#{@game_id}/join"
+    @start_game_url = "/games/#{@game_id}/start"
 
     erb :game_overview
   end
 
-  get "/:game_id/start" do
-    game_id = params["game_id"]
-    players = settings.player_store.find_all_by_game_id(game_id)
-    @game = settings.game_store.find(game_id)
-    @game.start(players)
-    erb :game_dashboard
-  end
-
-  get "/join/:game_id" do
+  get "/games/:game_id/join" do
     erb :join
   end
 
-  post "/join/:game_id" do
+  post "/games/:game_id/join" do
     game = settings.game_store.find(params[:game_id])
     settings.player_store.add(Player.new(
-      params[:game_id],
+      game.id,
       params["player_name"],
     ))
     settings.game_store.add_clues_to_game(game.id, [
@@ -80,7 +72,24 @@ class CelebrityApp < Sinatra::Base
       params["clue_5"]
     ])
 
-    redirect to("/game_overview/#{params[:game_id]}")
+    redirect to("/games/#{game.id}/dashboard")
+  end
+
+  get "/games/:game_id/start" do
+    game_id = params["game_id"]
+    players = settings.player_store.find_all_by_game_id(game_id)
+    @game = settings.game_store.find(game_id)
+    @game.start(players)
+    @start_turn_url = "/games/#{game_id}/play-turn"
+    erb :dashboard
+  end
+
+  get "/games/:game_id/play-turn" do
+    @game = settings.game_store.find(params["game_id"])
+    @turn = @game.new_turn
+    @guessed = @turn.guessed_clue
+    @skipped = @turn.skipped_clue
+    erb :play_turn
   end
 
   get "/clear" do
@@ -97,7 +106,6 @@ class CelebrityApp < Sinatra::Base
   end
 
   get "/sample-game" do
-
   end
 
   get "/play-turn" do

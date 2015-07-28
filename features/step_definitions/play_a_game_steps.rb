@@ -32,7 +32,7 @@ Given(/^"(.*?)" have joined the game$/) do |friends|
 
   friend_list.each do | friend |
     game_id = @game.id
-    visit "/join/#{game_id}"
+    visit "/games/#{game_id}/join"
 
     fill_in("player_name", :with => friend)
     fill_in("clue_1", :with => clues[0])
@@ -49,7 +49,7 @@ end
 
 When(/^the game is started$/) do
   game_id = @game.id
-  visit "/game_overview/#{game_id}"
+  visit "/games/#{game_id}/dashboard"
   click_link "Start Game"
 end
 
@@ -65,4 +65,11 @@ Then(/^there is a list of players for each team$/) do
       expect(page).to have_content player.name
     end
   end
+end
+
+Then(/^there is a player who can start a turn$/) do
+  game_id = @game.id
+  visit "/games/#{game_id}/dashboard"
+  click_link "Start Game"
+  expect(page).to have_content "Start Turn"
 end

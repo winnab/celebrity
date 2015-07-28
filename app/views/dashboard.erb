@@ -1,0 +1,15 @@
+<% @game.teams.each do | team | %>
+  <h3><%= team.name %></h3>
+
+  <h6>Players</h6>
+  <ul>
+  <% team.players.each do |player| %>
+    <li>
+      <%= player.name %>
+      <% if @game.current_player.name == player.name %>
+        <a href=<%= @start_turn_url %>>Start Turn</a>
+      <% end %>
+    </li>
+  <% end %>
+  </ul>
+<% end %>

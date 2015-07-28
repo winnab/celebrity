@@ -15,12 +15,12 @@ end
 
 Given(/^I have been invited to the game$/) do
   game_id = @game.id
-  visit "/join/#{game_id}"
+  visit "/games/#{game_id}/join"
 end
 
 Given(/^I am on the Join the Game page$/) do
   game_id = @game.id
-  visit "/join/#{game_id}"
+  visit "/games/#{game_id}/join"
 end
 
 When(/^I click the Join Game button$/) do

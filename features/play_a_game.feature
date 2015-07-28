@@ -5,4 +5,5 @@ Feature: Play a Game
     When the game is started
     Then the team names are listed
     And there is a list of players for each team
+    And there is a player who can start a turn
 
