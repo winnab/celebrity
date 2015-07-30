@@ -56,8 +56,12 @@ describe Turn do
       describe "changes clues methods" do
         before(:each) { turn.guessed_clue }
 
-        it "adds current_clue to complete clues" do
-          expect(turn.completed_clues).to include turn.current_clue
+        it "does not add current_clue to completed clues" do
+          expect(turn.current_clue).to be_a(String)
+        end
+
+        it "does not add current_clue to completed clues" do
+          expect(turn.completed_clues).to_not include turn.current_clue
         end
 
         it "removes current_clue from remaining clues" do
