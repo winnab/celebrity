@@ -15,9 +15,17 @@ class Game
   CLUES_PER_PLAYER = 5
 
   def initialize
-    @id = SecureRandom.uuid
-    @rounds = []
     @clues = []
+    @current_player_ix = 0
+    @current_round = nil
+    @current_round_id = nil
+    @current_round_count = nil
+    @current_team = nil
+    @id = SecureRandom.uuid
+    @players = []
+    @rounds = []
+    @scores = nil
+    @teams = []
   end
 
   def start players, num_teams = 2
@@ -26,6 +34,7 @@ class Game
     @players = create_players players
     @teams = create_teams num_teams
     start_round if can_start? # TODO fail gracefully
+    @current_round = current_round
     @current_round_id = current_round_id
     @current_round_count = CelebrityApp.settings.round_store.find_all_by_game_id(@id).count
     @scores = scores
@@ -79,6 +88,10 @@ class Game
 
   def current_team
     @teams.first
+  end
+
+  def current_round
+    @rounds[@rounds.count - 1]
   end
 
   def current_round_id

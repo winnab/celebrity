@@ -87,7 +87,6 @@ describe Game do
           end
         end
 
-        @game.start(@player_store.find_all_by_game_id(@game.id), @num_teams)
         expect(@game.can_start?).to be false
       end
     end
@@ -107,7 +106,6 @@ describe Game do
           end
         end
 
-        @game.start(@player_store.find_all_by_game_id(@game.id), @num_teams)
         expect(@game.can_start?).to be false
       end
     end
