@@ -4,7 +4,11 @@ require_relative './round'
 require_relative '../services/round_store'
 
 class Game
-  attr_accessor :players, :num_teams, :teams, :clues, :current_player_ix, :current_team, :current_round, :lineup, :id
+  attr_accessor :id,
+                :players, :current_player_ix, :lineup,
+                :teams, :num_teams, :current_team, :scores,
+                :clues, :current_round
+
   attr_reader :id, :current_round_count
 
   MIN_NUM_PLAYERS = 6
@@ -22,9 +26,9 @@ class Game
     @players = create_players players
     @teams = create_teams num_teams
     start_round if can_start? # TODO fail gracefully
-    @current_round = current_round
-    @current_round_count = @rounds.count
+    @current_round_id = current_round_id
     @current_round_count = CelebrityApp.settings.round_store.find_all_by_game_id(@id).count
+    @scores = scores
     self
   end
 
@@ -69,27 +73,36 @@ class Game
     end
   end
 
+  def scores
+    @teams.map(&:score)
+  end
+
   def current_team
     @teams.first
   end
 
-  def current_round
-    @rounds[@rounds.count - 1]
+  def current_round_id
+    @rounds[@rounds.count - 1].id
   end
 
   def new_turn
-    round = current_round
     round = CelebrityApp.settings.round_store.find(current_round_id)
     @turn = round.new_turn
   end
 
   def start_round
-    @rounds << Round.new(@current_player_ix, @teams, @clues.dup, @game)
+    round = Round.new(@current_player_ix, @teams, @clues.dup, self)
     CelebrityApp.settings.round_store.add(round)
+    @rounds << round
   end
 
   def can_start?
-    has_teams? && has_players? && has_clues? && sufficient_players? && sufficient_clues? # TODO throw specific errors
+    # TODO throw specific errors
+    has_teams? &&
+    has_players? &&
+    has_clues? &&
+    sufficient_players? &&
+    sufficient_clues?
   end
 
   def has_teams?

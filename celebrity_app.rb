@@ -91,7 +91,9 @@ class CelebrityApp < Sinatra::Base
   end
 
   get "/games/:game_id/dashboard" do
+    game_id = params["game_id"]
     rounds = settings.round_store.find_all_by_game_id(game_id)
+    @game = settings.game_store.find(game_id)
     @start_turn_url = "/games/#{game_id}/turn"
     erb :dashboard
   end
@@ -99,8 +101,14 @@ class CelebrityApp < Sinatra::Base
   get "/games/:game_id/turn" do
     @game = settings.game_store.find(params["game_id"])
     @turn = @game.new_turn
-    @guessed = @turn.guessed_clue
-    @skipped = @turn.skipped_clue
+    if request.query_string == "guessed=1"
+      puts ""
+      puts "here"
+      @turn.guessed_clue
+    end
+    if request.query_string == "guessed=0"
+      @turn.skipped_clue
+    end
     erb :turn
   end
 

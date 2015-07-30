@@ -12,9 +12,13 @@ class Turn
     @round = round
     @timer = Timer.new
     @score = 0
-    @current_clue = @remaining_clues.shift
+    @current_clue = current_clue
     @timer.add_observer self
     @timer.run
+  end
+
+  def current_clue
+    @remaining_clues.shift
   end
 
   def guessed_clue
@@ -25,13 +29,9 @@ class Turn
     update_as_skipped
   end
 
-  def get_score
-    @score
-  end
-
   def update
     unguessed_clues = @remaining_clues + [@current_clue]
-    @round.turn_completed(unguessed_clues, @completed_clues, get_score)
+    @round.turn_completed(unguessed_clues, @completed_clues, @score)
   end
 
   private
