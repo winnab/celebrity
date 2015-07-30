@@ -49,7 +49,7 @@ end
 
 When(/^the game is started$/) do
   game_id = @game.id
-  visit "/games/#{game_id}/dashboard"
+  visit "/games/#{game_id}/pending"
   click_link "Start Game"
 end
 
@@ -70,6 +70,11 @@ end
 Then(/^there is a player who can start a turn$/) do
   game_id = @game.id
   visit "/games/#{game_id}/dashboard"
-  click_link "Start Game"
   expect(page).to have_content "Start Turn"
+end
+
+Then(/^the player starts the turn$/) do
+  game_id = @game.id
+  visit "/games/#{game_id}/dashboard"
+  click_link "Start Turn"
 end

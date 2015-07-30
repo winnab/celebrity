@@ -46,10 +46,10 @@ class CelebrityApp < Sinatra::Base
     settings.player_store.add(Player.new(game.id, params["player_name"], clues))
     settings.game_store.add(game)
     settings.game_store.add_clues_to_game(game.id, clues)
-    redirect to("games/#{game.id}/dashboard")
+    redirect to("/games/#{game.id}/pending")
   end
 
-  get "/games/:game_id/dashboard" do
+  get "/games/:game_id/pending" do
     @game_id = params["game_id"]
     @players = settings.player_store.find_all_by_game_id(@game_id)
 
@@ -57,7 +57,7 @@ class CelebrityApp < Sinatra::Base
     @join_game_url = "/games/#{@game_id}/join"
     @start_game_url = "/games/#{@game_id}/start"
 
-    erb :game_overview
+    erb :pending
   end
 
   get "/games/:game_id/join" do
@@ -78,7 +78,7 @@ class CelebrityApp < Sinatra::Base
       params["clue_5"]
     ])
 
-    redirect to("/games/#{game.id}/dashboard")
+    redirect to("/games/#{game.id}/pending")
   end
 
   get "/games/:game_id/start" do
@@ -87,17 +87,21 @@ class CelebrityApp < Sinatra::Base
     @game = settings.game_store.find(game_id)
     rounds = settings.round_store.find_all_by_game_id(game_id)
     @game.start(players)
-    @start_turn_url = "/games/#{game_id}/play-turn"
+    redirect to("/games/#{game_id}/dashboard")
+  end
+
+  get "/games/:game_id/dashboard" do
     rounds = settings.round_store.find_all_by_game_id(game_id)
+    @start_turn_url = "/games/#{game_id}/turn"
     erb :dashboard
   end
 
-  get "/games/:game_id/play-turn" do
+  get "/games/:game_id/turn" do
     @game = settings.game_store.find(params["game_id"])
     @turn = @game.new_turn
     @guessed = @turn.guessed_clue
     @skipped = @turn.skipped_clue
-    erb :play_turn
+    erb :turn
   end
 
   get "/clear" do
@@ -114,6 +118,8 @@ class CelebrityApp < Sinatra::Base
   end
 
   get "/sample-game" do
+
+    redirect to("/games/#{game.id}/dashboard")
   end
 
   get "/play-turn" do
