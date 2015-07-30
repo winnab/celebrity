@@ -30,8 +30,6 @@ describe Game do
   end
 
   context "valid game" do
-
-
     let(:team) { @game.teams[0] }
 
     it "has an id" do
