@@ -2,6 +2,10 @@ require_relative "app/core/game"
 
 require_relative "app/services/game_store"
 require_relative "app/services/player_store"
+require_relative "app/services/round_store"
+require_relative "app/services/turn_store"
+
+require_relative "features/support/clues"
 
 class CelebrityApp < Sinatra::Base
   enable :sessions
@@ -13,6 +17,8 @@ class CelebrityApp < Sinatra::Base
     set :session_secret, ENV["SESSION_KEY"]
     set :game_store, GameStore.new
     set :player_store, PlayerStore.new
+    set :round_store, RoundStore.new
+    set :turn_store, TurnStore.new
     set :min_num_players, 6
   end
 
@@ -79,8 +85,10 @@ class CelebrityApp < Sinatra::Base
     game_id = params["game_id"]
     players = settings.player_store.find_all_by_game_id(game_id)
     @game = settings.game_store.find(game_id)
+    rounds = settings.round_store.find_all_by_game_id(game_id)
     @game.start(players)
     @start_turn_url = "/games/#{game_id}/play-turn"
+    rounds = settings.round_store.find_all_by_game_id(game_id)
     erb :dashboard
   end
 

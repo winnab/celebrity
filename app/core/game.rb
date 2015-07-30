@@ -1,6 +1,7 @@
 require_relative './player'
 require_relative './team'
 require_relative './round'
+require_relative '../services/round_store'
 
 class Game
   attr_accessor :players, :num_teams, :teams, :clues, :current_player_ix, :current_team, :current_round, :lineup, :id
@@ -23,6 +24,7 @@ class Game
     start_round if can_start? # TODO fail gracefully
     @current_round = current_round
     @current_round_count = @rounds.count
+    @current_round_count = CelebrityApp.settings.round_store.find_all_by_game_id(@id).count
     self
   end
 
@@ -77,11 +79,13 @@ class Game
 
   def new_turn
     round = current_round
+    round = CelebrityApp.settings.round_store.find(current_round_id)
     @turn = round.new_turn
   end
 
   def start_round
     @rounds << Round.new(@current_player_ix, @teams, @clues.dup, @game)
+    CelebrityApp.settings.round_store.add(round)
   end
 
   def can_start?
