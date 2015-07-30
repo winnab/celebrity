@@ -118,6 +118,29 @@ class CelebrityApp < Sinatra::Base
   end
 
   get "/sample-game" do
+    game = Game.new
+    settings.game_store.add(game)
+    @game = settings.game_store.find(game.id)
+    game_id = @game.id
+
+    creator_clues = Clues.new.creator_clues
+    settings.player_store.add(Player.new(game_id, "Star-Lord", creator_clues))
+    settings.game_store.add_clues_to_game(game_id, creator_clues)
+
+    player_clues = Clues.new.joined_players_clues
+
+    ["Groot", "Thanos", "Gamora", "Rocket Racoon", "Ronan the Accuser"].each do |player|
+      settings.player_store.add(Player.new(
+        game_id,
+        player,
+      ))
+      clues = player_clues.shift(5)
+      settings.game_store.add_clues_to_game(game_id, clues)
+    end
+
+    players = settings.player_store.find_all_by_game_id(game_id)
+    @game.start(players)
+    @start_turn_url = "/games/#{game_id}/play"
 
     redirect to("/games/#{game.id}/dashboard")
   end
@@ -128,5 +151,11 @@ class CelebrityApp < Sinatra::Base
 
   get "/styles/main.css" do
     scss :"../lib/styles/main.scss"
+  end
+
+  get "/example.json" do
+    content_type :json
+    @game = settings.game_store.list.last
+    @game.inspect.to_json
   end
 end
