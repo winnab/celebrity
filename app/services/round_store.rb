@@ -8,7 +8,6 @@ class RoundStore
   end
 
   def add round
-    binding.pry
     store << round unless store.include?(round)
   end
 

@@ -1,5 +1,8 @@
 ENV["RACK_ENV"] = "test"
 
+  require 'simplecov'
+  SimpleCov.start
+
 # TODO remove Bundler and explicitly require
 Bundler.require()
 

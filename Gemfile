@@ -9,6 +9,9 @@ gem "sass"
 # server
 gem "rack", "1.4.1"
 
+
+gem "simplecov", :require => false, :group => :test
+
 group :test, :development do
   gem "binding_of_caller"
   gem "byebug"

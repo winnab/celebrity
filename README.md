@@ -4,6 +4,7 @@
 > Work in Progress: [Modular-style](http://www.sinatrarb.com/intro.html#Modular%20vs.%20Classic%20Style) game app
 
 ### Test
+* Running the cucumber or unit tests will also run the coverage tool SimpleCov. Report details are in the `Coverage` folder.
 
 #### Feature tests
 ```bash
