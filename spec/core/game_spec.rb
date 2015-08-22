@@ -5,6 +5,7 @@ require_relative "../../app/core/round"
 require_relative "../../app/services/game_store"
 require_relative "../../app/services/player_store"
 
+require "active_model"
 require "spec_helper"
 
 describe Game do

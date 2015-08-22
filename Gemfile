@@ -1,7 +1,10 @@
 source "https://rubygems.org"
 ruby "2.1.4"
 
-gem "sinatra"
+gem "sinatra", "1.4.6"
+gem "sinatra-contrib", "1.4.6"
+gem "sinatra-activerecord", "2.0.4"
+gem "sinatra-active-model-serializers", "0.2.0"
 
 # assets
 gem "sass"

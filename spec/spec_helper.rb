@@ -3,6 +3,10 @@ ENV["RACK_ENV"] = "test"
 require "rubygems"
 require "bundler"
 
+require "sinatra/base"
+require "sinatra/json"
+require "active_model"
+
 # TODO remove Bundler and explicitly require
 Bundler.require()
 

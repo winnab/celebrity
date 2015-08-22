@@ -3,7 +3,10 @@ ENV["RACK_ENV"] ||= "development"
 require "rubygems"
 require "bundler"
 
-Bundler.require()
+require "sinatra/base"
+require "sinatra/json"
+
+Bundler.require :default
 
 require "./celebrity_app"
 

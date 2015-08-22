@@ -4,7 +4,9 @@ require_relative './round'
 require_relative '../services/round_store'
 
 class Game
-  attr_accessor :id,
+  include ActiveModel::Serialization
+
+  attr_accessor :id, :attributes,
                 :players, :current_player_ix, :lineup,
                 :teams, :num_teams, :current_team, :scores,
                 :clues, :current_round
@@ -26,6 +28,7 @@ class Game
     @rounds = []
     @scores = nil
     @teams = []
+    @attributes = nil
   end
 
   def start players, num_teams = 2
@@ -38,6 +41,12 @@ class Game
     @current_round_id = current_round_id
     @current_round_count = CelebrityApp.settings.round_store.find_all_by_game_id(@id).count
     @scores = scores
+    @attributes = {
+      "current_player" => @current_player,
+      "current_round" => @current_round,
+      "current_team" => @current_team,
+      "teams" => @teams
+    }
     self
   end
 

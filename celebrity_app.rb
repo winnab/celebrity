@@ -8,6 +8,7 @@ require_relative "app/services/turn_store"
 require_relative "features/support/clues"
 
 class CelebrityApp < Sinatra::Base
+  register Sinatra::ActiveRecordExtension
   enable :sessions
 
   configure do
@@ -164,6 +165,7 @@ class CelebrityApp < Sinatra::Base
   get "/example.json" do
     content_type :json
     @game = settings.game_store.list.last
-    @game.inspect.to_json
+    json @game.attributes, { root: false }
+    # @game.teams.map { |player| json player }
   end
 end
