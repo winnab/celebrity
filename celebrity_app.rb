@@ -22,6 +22,10 @@ class CelebrityApp < Sinatra::Base
     set :min_num_players, 6
   end
 
+  configure :production, :development do
+    enable :logging
+  end
+
   get "/" do
     erb :create_game
   end
