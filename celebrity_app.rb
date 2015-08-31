@@ -96,16 +96,11 @@ class CelebrityApp < Sinatra::Base
   end
 
   get "/games/:game_id/turn" do
-    @game = settings.game_store.find(params["game_id"])
-    @turn = @game.new_turn
-    if request.query_string == "guessed=1"
-      puts ""
-      puts "here"
-      @turn.guessed_clue
-    end
-    if request.query_string == "guessed=0"
-      @turn.skipped_clue
-    end
+    game = settings.game_store.find(params["game_id"])
+    round = game.new_round
+    @turn = round.new_turn
+    logger.info "game num clues #{game.clues.count}"
+    logger.info "round num clues #{@turn.remaining_clues.count}"
     erb :turn
   end
 

@@ -18,7 +18,7 @@ class Turn
   end
 
   def current_clue
-    @current_clue || @remaining_clues.shift
+    @current_clue || @remaining_clues[0]
   end
 
   def guessed_clue
@@ -56,11 +56,11 @@ class Turn
 
   def set_next_clue
     @completed_clues << @current_clue
-    @current_clue = @remaining_clues.shift
+    @current_clue = @remaining_clues[0]
   end
 
   def send_clue_to_back
     @remaining_clues << @current_clue
-    @current_clue = @remaining_clues.shift
+    @current_clue = @remaining_clues[0]
   end
 end

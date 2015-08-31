@@ -11,4 +11,6 @@ require "./celebrity_app"
 require "sass/plugin/rack"
 use Sass::Plugin::Rack
 
+use Rack::Static, :urls => ['/scripts', '/styles'], :root => 'app/public'
+
 run CelebrityApp

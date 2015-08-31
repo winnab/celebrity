@@ -98,9 +98,8 @@ class Game
     @rounds[@rounds.count - 1].id
   end
 
-  def new_turn
-    round = CelebrityApp.settings.round_store.find(current_round_id)
-    @turn = round.new_turn
+  def new_round
+    CelebrityApp.settings.round_store.find(current_round_id)
   end
 
   def start_round

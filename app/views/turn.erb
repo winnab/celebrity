@@ -1,24 +1,8 @@
-<h6>Timer: <%= @turn.timer %></h6>
-<h6>Score: <%= @turn.score %></h6>
-<h3>Clue</h3>
-<p><%= @turn.current_clue %></p>
-<a href="/games/<%= @game.id %>/turn?guessed=1">Got it</a>
-<a href="/games/<%= @game.id %>/turn?guessed=0">Skip it</a>
+<div id="turn"></div>
 
-<hr>
-
-<h5>Completed</h5>
-<ul>
-  <% @turn.completed_clues.each do |clue| %>
-    <li><%= clue %></li>
-  <% end %>
-</ul>
-
-<hr>
-
-<h5><%= @turn.remaining_clues.count %> Remaining</h5>
-<ul>
-  <% @turn.remaining_clues.each do |clue| %>
-    <li><%= clue %></li>
-  <% end %>
-</ul>
+<script type="text/jsx">
+  React.render(
+    <Turn clues={<%= @turn.remaining_clues %>}/>,
+      document.getElementById('turn')
+  );
+</script>
