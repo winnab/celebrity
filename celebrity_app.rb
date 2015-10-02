@@ -78,6 +78,10 @@ class CelebrityApp < Sinatra::Base
     redirect to("/games/#{game.id}/pending")
   end
 
+  get "/games/:game_id" do
+    erb :game
+  end
+
   get "/games/:game_id/start" do
     game_id = params["game_id"]
     players = settings.player_store.find_all_by_game_id(game_id)
@@ -96,9 +100,11 @@ class CelebrityApp < Sinatra::Base
   end
 
   get "/games/:game_id/turn" do
-    game = settings.game_store.find(params["game_id"])
+    game_id = params["game_id"]
+    game = settings.game_store.find(game_id)
     round = game.new_round
     @turn = round.new_turn
+    @end_turn_url = "/games/#{game_id}/end-turn"
     logger.info "game num clues #{game.clues.count}"
     logger.info "round num clues #{@turn.remaining_clues.count}"
     erb :turn
@@ -114,7 +120,7 @@ class CelebrityApp < Sinatra::Base
   end
 
   get "/styleguide" do
-    erb :styleguide
+    erb :stylesheet
   end
 
   get "/sample-game" do
@@ -141,12 +147,24 @@ class CelebrityApp < Sinatra::Base
     players = settings.player_store.find_all_by_game_id(game_id)
     @game.start(players)
     @start_turn_url = "/games/#{game_id}/play"
-
-    redirect to("/games/#{game.id}/dashboard")
+    erb :game
+    # redirect to("/games/#{game.id}/dashboard")
   end
 
   get "/play-turn" do
     erb :play_turn
+  end
+
+  post "/games/:game_id/end-turn" do
+    puts ""
+    puts ""
+    puts "params #{params}"
+    puts ""
+    puts ""
+  end
+
+  get "/stylesheet" do
+    erb :stylesheet
   end
 
   get "/styles/main.css" do

@@ -1,15 +1,24 @@
-<% @game.teams.each do | team | %>
-  <h3><%= team.name %></h3>
+<% @game.teams.each_with_index do | team, index | %>
+  <% players = team.players.map { |player| player.name } %>
+  <% current_player = @game.current_player.name %>
 
-  <h6>Players</h6>
-  <ul>
-  <% team.players.each do |player| %>
-    <li>
-      <%= player.name %>
-      <% if @game.current_player.name == player.name %>
-        <a href=<%= @start_turn_url %>>Start Turn</a>
-      <% end %>
-    </li>
-  <% end %>
-  </ul>
+  <div
+    class="team-roster"
+    id="team-<%= index %>"
+  >
+  </div>
+
+  <script type="text/jsx">
+    React.render(
+      <TeamRoster
+        currentPlayer={"<%= current_player %>"}
+        name={"<%= team.name %>"}
+        players={<%= players %>}
+        startTurnUrl={"<%= @start_turn_url %>"}
+      />,
+      document.getElementById("team-<%= index %>")
+    );
+  </script>
 <% end %>
+
+

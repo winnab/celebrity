@@ -54,7 +54,6 @@ form {
     background-color: $gray-light-1;
   }
 
-  button,
   input[type="button"],
   input[type="submit"] {
     background: $green-dark-1;
@@ -65,7 +64,6 @@ form {
     padding: 10px;
   }
 
-  button:hover,
   input[type="button"]:hover,
   input[type="submit"]:hover {
     background: $green-dark-2;

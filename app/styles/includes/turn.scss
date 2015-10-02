@@ -1,0 +1,46 @@
+.turn {
+  text-align: center;
+
+  button {
+    background: $green-dark-1;
+    border: none;
+    border-radius: 2px;
+    color: $almost-white;
+    margin: 30px 5px 10px;
+    padding: 10px;
+
+    &:hover {
+      background: $green-dark-2;
+    }
+
+    &:disabled {
+      background-color: $gray-dark-1;
+      color: $almost-white;
+    }
+  }
+
+  .timer {
+    h2 {
+      color: $green-dark-1;
+      font-family: $celebrity-sans-serif-font;
+      font-size: 1.75em;
+      margin: 20px auto 30px;
+    }
+  }
+
+  .guessed-clues-review {
+    margin-top: 20px;
+    -webkit-animation: fadein 2s linear forwards;
+    animation: fadein 2s linear forwards;
+  }
+
+  @-webkit-keyframes fadein {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes fadein {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+}

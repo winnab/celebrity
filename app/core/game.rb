@@ -58,7 +58,7 @@ class Game
     teams = []
     num_teams.times do | i |
       players_by_team[i].each { | p | p.team = i }
-      teams << Team.new("Team #{i}!", players_by_team[i])
+      teams << Team.new("Team #{i}", players_by_team[i])
     end
     teams
   end

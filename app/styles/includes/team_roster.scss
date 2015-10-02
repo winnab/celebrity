@@ -1,0 +1,40 @@
+.team-roster {
+  float: left;
+  margin: 0;
+  padding: 20px;
+  width: 49%;
+
+  &:first-of-type{
+    margin-right: 1%;
+  }
+
+  &:last-of-type{
+    margin-left: 1%;
+  }
+}
+
+.team-roster li {
+  border-bottom: 1px dashed $orange-dark-1;
+  line-height: 40px;
+  margin-bottom: 10px;
+  padding: 10px 0;
+}
+
+.team-roster li.current-player {
+  font-weight: bold;
+}
+
+.team-roster li a {
+  background: $green-dark-1;
+  border: none;
+  border-radius: 2px;
+  color: $almost-white;
+  display: inline;
+  line-height: 20px;
+  padding: 10px;
+  margin-left: 10px;
+
+  &:hover {
+    background: $green-dark-2;
+  }
+}

@@ -18,9 +18,10 @@ var Timer = React.createClass({
     clearInterval(this.interval);
   },
   render: function() {
-    console.log('here');
     return (
-      <div>Seconds Remaining: {this.state.secondsRemaining}</div>
+      <div className={this.props.className}>
+        <h2>{this.state.secondsRemaining}</h2>
+      </div>
     );
   }
 });

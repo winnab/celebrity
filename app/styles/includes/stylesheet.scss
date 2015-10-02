@@ -1,0 +1,132 @@
+.stylesheet {
+  .stylesheet-column {
+    display: inline-block;
+    float: left;
+    width: 30%;
+    margin-right: 5%;
+  }
+
+  .stylesheet-column:last-of-type {
+    margin-right: 0;
+  }
+
+  .colors {
+    padding: 20px;
+    border: 5px solid $almost-white;
+    background: #fff;
+
+    h3 {
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    div {
+      @include clearfix();
+      margin: 5px 0;
+    }
+
+    pre {
+      float: left;
+    }
+
+    div.color {
+      margin: 0 auto;
+      padding: 10px;
+      max-width: 200px;
+
+
+      span {
+        display: inline-block;
+        float: left;
+        height: $default-body-font-size;
+        margin-right: 10px;
+        width: $default-body-font-size;
+      }
+
+      &.color-acqua-dark-2 {
+        background: $acqua-dark-2;
+      }
+
+      &.color-acqua-dark-1 {
+        background: $acqua-dark-1;
+      }
+
+      &.color-almost-white {
+        background: $almost-white;
+      }
+
+      &.color-gray-dark-1 {
+        background: $gray-dark-1;
+      }
+
+      &.color-gray-light-1 {
+        background: $gray-light-1;
+      }
+
+      &.color-gray-light-2 {
+        background: $gray-light-2;
+      }
+
+      &.color-blue-dark-2 {
+        background: $blue-dark-2;
+      }
+
+      &.color-blue-dark-1 {
+        background: $blue-dark-1;
+      }
+
+      &.color-blue-light-1 {
+        background: $blue-light-1;
+      }
+
+      &.color-blue-light-2 {
+        background: $blue-light-2;
+      }
+
+      &.color-green-dark-2 {
+        background: $green-dark-2;
+      }
+
+      &.color-green-dark-1 {
+        background: $green-dark-1;
+      }
+
+      &.color-purple-dark-2 {
+        background: $purple-dark-2;
+      }
+
+      &.color-purple-dark-1 {
+        background: $purple-dark-1;
+      }
+
+      &.color-pink-dark-2 {
+        background: $pink-dark-2;
+      }
+
+      &.color-pink-dark-1 {
+        background: $pink-dark-1;
+      }
+
+      &.color-orange-dark-2 {
+        background: $orange-dark-2;
+      }
+
+      &.color-orange-dark-1 {
+        background: $orange-dark-1;
+      }
+
+      &.color-yellow-dark-2 {
+        background: $yellow-dark-2;
+      }
+
+      &.color-yellow-dark-1 {
+        background: $yellow-dark-1;
+      }
+
+      &.color-yellow-light-1 {
+        background: $yellow-light-1;
+      }
+
+    }
+  }
+}

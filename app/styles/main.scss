@@ -31,7 +31,7 @@ section.container {
   }
 
   p {
-    margin: 8px 0;
+    margin: 12px 0;
   }
 
   a {
@@ -44,6 +44,31 @@ section.container {
     text-decoration: none;
   }
 
+  hr {
+    border: 0;
+    border-bottom: 1px dashed $almost-white;
+    background: $yellow-dark-1;
+  }
+
+  button {
+    background: $green-dark-1;
+    border: none;
+    border-radius: 2px;
+    color: $almost-white;
+    margin-top: 10px;
+    padding: 10px;
+  }
+
+  button:hover {
+    background: $green-dark-2;
+  }
+
+  .callout-letters {
+    color: $purple-dark-1;
+    font-weight: $heavy-heading-font-weight;
+    margin: 0 3px;
+  }
+
   /* separate files for element-specific styles */
   @import 'includes/articles';
   @import 'includes/forms';
@@ -51,9 +76,13 @@ section.container {
 
   // separate files for page-specific styles
   @import 'includes/active_game_overview';
+  @import 'includes/team_roster';
+  @import 'includes/turn';
 }
 
 
 /* separate files for region-specific styles */
 @import 'includes/site_footer';
 @import 'includes/site_nav';
+
+@import 'includes/stylesheet';
